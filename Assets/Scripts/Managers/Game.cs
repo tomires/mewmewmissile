@@ -14,10 +14,12 @@ namespace Mew.Managers
         [SerializeField] private GameObject mousePrefab;
         [SerializeField] private GameObject rocketPrefab;
         [SerializeField] private GameObject spawnerPrefab;
+        [SerializeField] private GameObject holePrefab;
 
         private List<Block> _blocks = new List<Block>();
         private List<Spawner> _spawners = new List<Spawner>();
         private List<Rocket> _rockets = new List<Rocket>();
+        private List<GameObject> _holes = new List<GameObject>();
 
         void Start()
         {
@@ -40,6 +42,7 @@ namespace Mew.Managers
             _blocks = new List<Block>();
             _rockets = new List<Rocket>();
             _spawners = new List<Spawner>();
+            _holes = new List<GameObject>();
             int player = 0;
 
             for (int x = 0; x < Constants.Settings.BoardSize.x; x++)
@@ -47,9 +50,9 @@ namespace Mew.Managers
                 for (int y = 0; y < Constants.Settings.BoardSize.y; y++)
                 {
                     BlockerSetting blockerSetting;
-                    bool rocket;
+                    bool rocket, hole;
                     Direction spawnerDirection;
-                    ParseField(board[y][x], out blockerSetting, out rocket, out spawnerDirection);
+                    ParseField(board[y][x], out blockerSetting, out rocket, out hole, out spawnerDirection);
 
                     var coordinates = new Vector2(x, Constants.Settings.BoardSize.y - y);
                     SpawnBlock(coordinates, blockerSetting);
@@ -59,6 +62,9 @@ namespace Mew.Managers
 
                     if (spawnerDirection != Direction.Default)
                         SpawnSpawner(coordinates, spawnerDirection);
+
+                    if (hole)
+                        SpawnHole(coordinates);
                 }
             }
         }
@@ -82,11 +88,19 @@ namespace Mew.Managers
         private void SpawnSpawner(Vector2 coordinates, Direction direction)
         {
             var spawner = Instantiate(spawnerPrefab).GetComponent<Spawner>();
+            spawner.Initialize(direction);
             spawner.transform.position = new Vector3(coordinates.x, 0, coordinates.y);
             _spawners.Add(spawner);
         }
 
-        private void ParseField(string field, out BlockerSetting blockerSetting, out bool rocket, out Direction spawnerDirection)
+        private void SpawnHole(Vector2 coordinates)
+        {
+            var hole = Instantiate(holePrefab);
+            hole.transform.position = new Vector3(coordinates.x, 0, coordinates.y);
+            _holes.Add(hole);
+        }
+
+        private void ParseField(string field, out BlockerSetting blockerSetting, out bool rocket, out bool hole, out Direction spawnerDirection)
         {
             var up = field[0] == 'X';
             var right = field[1] == 'X';
@@ -95,6 +109,7 @@ namespace Mew.Managers
 
             blockerSetting = new BlockerSetting(up, right, down, left);
             rocket = field[4] == 'R';
+            hole = field[4] == 'H';
             spawnerDirection = field[4] switch
             {
                 'u' => Direction.Up,

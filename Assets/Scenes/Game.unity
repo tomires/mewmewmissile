@@ -157,6 +157,7 @@ MonoBehaviour:
   mousePrefab: {fileID: 829816775202005781, guid: c892b366b719c4ecc9219228e1aa760b, type: 3}
   rocketPrefab: {fileID: 7468691039310933612, guid: dedec09969d1b4f8db241a548fa2279a, type: 3}
   spawnerPrefab: {fileID: 4542731131821087558, guid: 9a0af876ed200406fafe8db303aa5893, type: 3}
+  holePrefab: {fileID: 8722926688142823760, guid: b57f104e6477143589937f71f043a52f, type: 3}
 --- !u!4 &735835832
 Transform:
   m_ObjectHideFlags: 0

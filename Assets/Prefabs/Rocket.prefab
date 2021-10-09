@@ -658,9 +658,10 @@ GameObject:
   m_Component:
   - component: {fileID: 7849156506123842774}
   - component: {fileID: 6160000436553506038}
+  - component: {fileID: 7573378078466916268}
   m_Layer: 0
   m_Name: Rocket
-  m_TagString: Untagged
+  m_TagString: Death
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -707,6 +708,19 @@ MonoBehaviour:
   - {fileID: 2034988711866480984}
   - {fileID: 7355580124000895483}
   - {fileID: 6214728885445691393}
+--- !u!135 &7573378078466916268
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7468691039310933612}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7799492014340494746
 GameObject:
   m_ObjectHideFlags: 0
