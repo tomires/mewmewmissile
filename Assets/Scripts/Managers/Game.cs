@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.IO;
 using Mew.Objects;
 using Mew.Models;
 
@@ -15,28 +16,93 @@ namespace Mew.Managers
         [SerializeField] private GameObject spawnerPrefab;
 
         private List<Block> _blocks = new List<Block>();
+        private List<Spawner> _spawners = new List<Spawner>();
+        private List<Rocket> _rockets = new List<Rocket>();
 
         void Start()
         {
-            InitializeBoard();
+            InitializeBoard("stage1.mew");
             Audio.Instance.PlayMusic(GameState.Match);
         }
 
-        private void InitializeBoard()
+        private void InitializeBoard(string file)
         {
-            _blocks = new List<Block>();
+            List<List<string>> board = new List<List<string>>();
+            using (var reader = new StreamReader($"{Constants.Paths.StagesFolder}/{file}"))
+            {
+                while (!reader.EndOfStream)
+                {
+                    var line = reader.ReadLine().Split(',');
+                    board.Add(new List<string>(line));
+                }
+            }
 
-            for(int x = 0; x < Constants.Settings.BoardSize.x; x++)
+            _blocks = new List<Block>();
+            _rockets = new List<Rocket>();
+            _spawners = new List<Spawner>();
+            int player = 0;
+
+            for (int x = 0; x < Constants.Settings.BoardSize.x; x++)
             {
                 for (int y = 0; y < Constants.Settings.BoardSize.y; y++)
                 {
-                    var block = Instantiate(blockPrefab).GetComponent<Block>();
-                    var blockerSettings = new BlockerSetting(false, false, false, false);
-                    block.Initialize(new Vector2(x, y), blockerSettings);
-                    block.transform.position = new Vector3(x, 0, y);
-                    _blocks.Add(block);
+                    BlockerSetting blockerSetting;
+                    bool rocket;
+                    Direction spawnerDirection;
+                    ParseField(board[y][x], out blockerSetting, out rocket, out spawnerDirection);
+
+                    var coordinates = new Vector2(x, Constants.Settings.BoardSize.y - y);
+                    SpawnBlock(coordinates, blockerSetting);
+
+                    if (rocket)
+                        SpawnRocket(coordinates, player++);
+
+                    if (spawnerDirection != Direction.Default)
+                        SpawnSpawner(coordinates, spawnerDirection);
                 }
             }
+        }
+
+        private void SpawnBlock(Vector2 coordinates, BlockerSetting blockerSetting)
+        {
+            var block = Instantiate(blockPrefab).GetComponent<Block>();
+            block.Initialize(coordinates, blockerSetting);
+            block.transform.position = new Vector3(coordinates.x, 0, coordinates.y);
+            _blocks.Add(block);
+        }
+
+        private void SpawnRocket(Vector2 coordinates, int player)
+        {
+            var rocket = Instantiate(rocketPrefab).GetComponent<Rocket>();
+            rocket.Initialize(player);
+            rocket.transform.position = new Vector3(coordinates.x, 0, coordinates.y);
+            _rockets.Add(rocket);
+        }
+
+        private void SpawnSpawner(Vector2 coordinates, Direction direction)
+        {
+            var spawner = Instantiate(spawnerPrefab).GetComponent<Spawner>();
+            spawner.transform.position = new Vector3(coordinates.x, 0, coordinates.y);
+            _spawners.Add(spawner);
+        }
+
+        private void ParseField(string field, out BlockerSetting blockerSetting, out bool rocket, out Direction spawnerDirection)
+        {
+            var up = field[0] == 'X';
+            var right = field[1] == 'X';
+            var down = field[2] == 'X';
+            var left = field[3] == 'X';
+
+            blockerSetting = new BlockerSetting(up, right, down, left);
+            rocket = field[4] == 'R';
+            spawnerDirection = field[4] switch
+            {
+                'u' => Direction.Up,
+                'r' => Direction.Right,
+                'd' => Direction.Down,
+                'l' => Direction.Left,
+                _ => Direction.Default
+            };
         }
     }
 }

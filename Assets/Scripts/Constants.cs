@@ -22,5 +22,10 @@ namespace Mew.Constants
     public static class Settings
     {
         public static readonly Vector2 BoardSize = new Vector2(12, 9);
+    }   
+
+    public static class Paths
+    {
+        public static readonly string StagesFolder = $"{Application.streamingAssetsPath}/";
     }
 }
