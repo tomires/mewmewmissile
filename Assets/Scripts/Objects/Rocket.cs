@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Mew.Managers;
 
 namespace Mew.Objects
 {
@@ -18,6 +19,18 @@ namespace Mew.Objects
 
             foreach (var renderer in renderers)
                 renderer.material = material;
+        }
+
+        public void PropagateMouseGain()
+        {
+            Audio.Instance.PlayOneShot(Audio.Sound.Mouse);
+            PlayerRoster.Instance.PropagateMouseGain(_player);
+        }
+
+        public void PropagateCatHit()
+        {
+            Audio.Instance.PlayOneShot(Audio.Sound.Explosion);
+            PlayerRoster.Instance.PropagateCatHit(_player);
         }
     }
 }

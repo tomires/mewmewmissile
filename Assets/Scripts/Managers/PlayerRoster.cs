@@ -42,6 +42,18 @@ namespace Mew.Managers
             return _players[player].ArrowsSpawnable;
         }
 
+        public void PropagateMouseGain(int player)
+        {
+            if (player >= _players.Count) return;
+            _players[player].PropagateMouseGain();
+        }
+
+        public void PropagateCatHit(int player)
+        {
+            if (player >= _players.Count) return;
+            _players[player].PropagateCatHit();
+        }
+
         void Start()
         {
             DontDestroyOnLoad(gameObject);

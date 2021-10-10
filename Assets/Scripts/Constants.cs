@@ -24,6 +24,7 @@ namespace Mew.Constants
         public static readonly string Mouse = "Mouse";
         public static readonly string Cat = "Cat";
         public static readonly string Death = "Death";
+        public static readonly string Rocket = "Rocket";
     }
 
     public static class Settings
@@ -32,6 +33,7 @@ namespace Mew.Constants
         public static readonly float DefaultSpeed = 4f;
         public static readonly float DefaultSpawnRate = 1.25f;
         public static readonly float ArrowLifetime = 20f;
+        public static readonly float CatHitMultiplier = 0.66f;
         public static readonly int MaxMouseCount = 50;
         public static readonly int MaxCatCount = 4;
         public static readonly int MaxArrowsPerPlayer = 3;

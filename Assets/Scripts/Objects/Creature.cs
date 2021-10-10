@@ -25,7 +25,7 @@ namespace Mew.Objects
 
         private IEnumerator Move()
         {
-            while(true)
+            while (true)
             {
                 transform.position = new Vector3(_coordinates.x, 0, _coordinates.y);
                 _direction = Game.Instance.GetNextMove(_coordinates, _direction);
@@ -53,7 +53,7 @@ namespace Mew.Objects
         {
             var offset = Utils.GetOffset(_direction);
             var step = 0f;
-            while(true)
+            while (true)
             {
                 step += Time.deltaTime / (Game.Instance.Speed * 1 / speedMultiplier);
                 transform.position = new Vector3(_coordinates.x + offset.x * step, 0, _coordinates.y + offset.y * step);
@@ -63,16 +63,29 @@ namespace Mew.Objects
 
         private void OnTriggerEnter(Collider other)
         {
+            if(other.CompareTag(Constants.Tags.Rocket))
+            {
+                var rocket = other.GetComponent<Rocket>();
+                if (_isMouse)
+                    rocket.PropagateMouseGain();
+                if(_isCat)
+                    rocket.PropagateCatHit();
+                Destroy();
+            }
+
             if (_isMouse && !other.CompareTag(Constants.Tags.Mouse))
-            {
+                Destroy();
+            else if (_isCat && other.CompareTag(Constants.Tags.Death))
+                Destroy();
+        }
+
+        private void Destroy()
+        {
+            if (_isMouse)
                 Game.Instance.UpdateMouseCount(false);
-                Destroy(gameObject);
-            }
-            else if(_isCat && other.CompareTag(Constants.Tags.Death))
-            {
+            else if (_isCat)
                 Game.Instance.UpdateCatCount(false);
-                Destroy(gameObject);
-            }
+            Destroy(gameObject);
         }
     }
 }

@@ -14,12 +14,22 @@ namespace Mew
         private int _arrowsLeft;
         private bool _initialized = false;
 
-        public bool ArrowsSpawnable => _arrowsLeft > 0;
 
-        public void UpdateArrowCount(bool increase)
+        private int _score = 0;
+        private int Score
         {
-            _arrowsLeft += increase ? 1 : -1;
+            set
+            {
+                _score = value;
+            }
+            get => _score;
         }
+
+        public void PropagateMouseGain() => Score++;
+        public void PropagateCatHit() => Score = Mathf.FloorToInt(Constants.Settings.CatHitMultiplier * Score);
+
+        public bool ArrowsSpawnable => _arrowsLeft > 0;
+        public void UpdateArrowCount(bool increase) => _arrowsLeft += increase ? 1 : -1;
 
         public void Initialize(Color color, Vector2 coordinates, int playerNumber)
         {
