@@ -25,7 +25,6 @@ namespace Mew.Managers
 
         public void ShowController(int player)
         {
-            Debug.Log(player);
             controllers[player].color = Constants.Colors.PlayerColor[player];
         }
 
