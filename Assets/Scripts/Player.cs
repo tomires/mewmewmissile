@@ -27,7 +27,7 @@ namespace Mew
             get => _score;
         }
 
-        public void PropagateMouseGain() => Score++;
+        public void PropagateMouseGain(bool bonus) => Score += bonus ? Constants.Settings.MouseBonusValue : 1;
         public void PropagateCatHit() => Score = Mathf.FloorToInt(Constants.Settings.CatHitMultiplier * Score);
 
         public void PropagateArrowPlaced(Block block)

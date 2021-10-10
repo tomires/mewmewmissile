@@ -21,10 +21,10 @@ namespace Mew.Objects
                 renderer.material = material;
         }
 
-        public void PropagateMouseGain()
+        public void PropagateMouseGain(bool bonus)
         {
             Audio.Instance.PlayOneShot(Audio.Sound.Mouse);
-            PlayerRoster.Instance.PropagateMouseGain(_player);
+            PlayerRoster.Instance.PropagateMouseGain(_player, bonus);
         }
 
         public void PropagateCatHit()

@@ -31,9 +31,14 @@ namespace Mew.Constants
     {
         public static readonly Vector2 BoardSize = new Vector2(12, 9);
         public static readonly float DefaultSpeed = 4f;
+        public static readonly float MouseSpeedMultiplier = 1f;
+        public static readonly float CatSpeedMultiplier = 0.7f;
         public static readonly float DefaultSpawnRate = 1.25f;
         public static readonly float ArrowLifetime = 20f;
         public static readonly float CatHitMultiplier = 0.66f;
+        public static readonly float ModeMouseChance = 0.2f;
+        public static readonly float BonusMouseChance = 0.1f;
+        public static readonly int MouseBonusValue = 50;
         public static readonly int MaxMouseCount = 50;
         public static readonly int MaxCatCount = 4;
         public static readonly int MaxArrowsPerPlayer = 3;

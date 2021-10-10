@@ -5,15 +5,15 @@ using Mew.Managers;
 
 namespace Mew.Objects
 {
-    public class Creature : MonoBehaviour
+    public abstract class Creature : MonoBehaviour
     {
-        [SerializeField] float speedMultiplier = 1f;
+        protected abstract float SpeedMultiplier { get; }
         private Direction _direction;
         private Vector2 _coordinates;
-        private bool _isMouse => gameObject.CompareTag(Constants.Tags.Mouse);
-        private bool _isCat => gameObject.CompareTag(Constants.Tags.Cat);
+        private bool _isMouse => GetType() == typeof(Mouse);
+        private bool _isCat => GetType() == typeof(Cat);
 
-        public void Initialize(Vector2 coordinates, Direction direction)
+        public virtual void Initialize(Vector2 coordinates, Direction direction)
         {
             _direction = direction;
             _coordinates = coordinates;
@@ -31,7 +31,7 @@ namespace Mew.Objects
                 _direction = Game.Instance.GetNextMove(_coordinates, _direction);
                 Rotate();
                 var animation = StartCoroutine(AnimateMove());
-                yield return new WaitForSeconds(Game.Instance.Speed * 1 / speedMultiplier);
+                yield return new WaitForSeconds(Game.Instance.Speed * 1 / SpeedMultiplier);
                 StopCoroutine(animation);
                 _coordinates += Utils.GetOffset(_direction);
             }
@@ -55,7 +55,7 @@ namespace Mew.Objects
             var step = 0f;
             while (true)
             {
-                step += Time.deltaTime / (Game.Instance.Speed * 1 / speedMultiplier);
+                step += Time.deltaTime / (Game.Instance.Speed * 1 / SpeedMultiplier);
                 transform.position = new Vector3(_coordinates.x + offset.x * step, 0, _coordinates.y + offset.y * step);
                 yield return null;
             }
@@ -63,12 +63,17 @@ namespace Mew.Objects
 
         private void OnTriggerEnter(Collider other)
         {
-            if(other.CompareTag(Constants.Tags.Rocket))
+            if (other.CompareTag(Constants.Tags.Rocket))
             {
                 var rocket = other.GetComponent<Rocket>();
                 if (_isMouse)
-                    rocket.PropagateMouseGain();
-                if(_isCat)
+                {
+                    var mouseType = ((Mouse)this).Type;
+                    rocket.PropagateMouseGain(mouseType == Mouse.MouseType.Bonus);
+                    if (mouseType == Mouse.MouseType.Mode)
+                        PlayerRoster.Instance.ChangeMode();
+                }
+                else if (_isCat)
                     rocket.PropagateCatHit();
                 Destroy();
             }

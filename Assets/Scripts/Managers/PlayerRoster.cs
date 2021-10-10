@@ -43,16 +43,21 @@ namespace Mew.Managers
             _players[player].PropagateArrowRemoved(block);
         }
 
-        public void PropagateMouseGain(int player)
+        public void PropagateMouseGain(int player, bool bonus)
         {
             if (player >= _players.Count) return;
-            _players[player].PropagateMouseGain();
+            _players[player].PropagateMouseGain(bonus);
         }
 
         public void PropagateCatHit(int player)
         {
             if (player >= _players.Count) return;
             _players[player].PropagateCatHit();
+        }
+
+        public void ChangeMode()
+        {
+            Debug.Log("Change mode");
         }
 
         void Start()

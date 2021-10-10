@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1791979960732041262}
   - component: {fileID: 5986961801762920714}
   - component: {fileID: 3307934187855088086}
-  - component: {fileID: 2931942871644895149}
+  - component: {fileID: 92264119894576067}
   m_Layer: 0
   m_Name: Cat
   m_TagString: Cat
@@ -69,7 +69,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 3
---- !u!114 &2931942871644895149
+--- !u!114 &92264119894576067
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -78,7 +78,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1411232980579195540}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa3875ed5fbff46f493bf058718f1cc3, type: 3}
+  m_Script: {fileID: 11500000, guid: b39448dc3708f4036b990241d68249b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speedMultiplier: 0.7
