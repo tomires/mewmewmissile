@@ -92,11 +92,11 @@
                 },
                 {
                     "name": "",
-                    "id": "e630c695-d547-4309-bf2e-838cb449a5f5",
-                    "path": "<Joystick>/stick/down",
+                    "id": "487ecc5d-ebdf-4983-9dba-c3f1fe60c725",
+                    "path": "<Keyboard>/d",
                     "interactions": "Press",
                     "processors": "",
-                    "groups": "Joystick",
+                    "groups": "Keyboard",
                     "action": "Down",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -114,11 +114,11 @@
                 },
                 {
                     "name": "",
-                    "id": "621d6761-6586-47a6-9389-d3bff3c22ed5",
-                    "path": "<Joystick>/stick/left",
+                    "id": "6af9aea7-8951-4ec3-b47c-a62585d7e29f",
+                    "path": "<Keyboard>/s",
                     "interactions": "Press",
                     "processors": "",
-                    "groups": "Joystick",
+                    "groups": "Keyboard",
                     "action": "Left",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -136,11 +136,11 @@
                 },
                 {
                     "name": "",
-                    "id": "34bcb49e-90a1-41e6-bfea-0753a8a32fb5",
-                    "path": "<Joystick>/stick/right",
+                    "id": "14185006-f1f9-4cb8-9a83-ce6de8eb34f6",
+                    "path": "<Keyboard>/f",
                     "interactions": "Press",
                     "processors": "",
-                    "groups": "Joystick",
+                    "groups": "Keyboard",
                     "action": "Right",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -158,11 +158,11 @@
                 },
                 {
                     "name": "",
-                    "id": "4edfcb9c-2707-444b-93c3-c1788ad53165",
-                    "path": "",
+                    "id": "acb6ebd5-9e93-4d98-8a89-756ac65867e8",
+                    "path": "<Keyboard>/i",
                     "interactions": "Press",
                     "processors": "",
-                    "groups": "Joystick",
+                    "groups": "Keyboard",
                     "action": "North",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -180,11 +180,11 @@
                 },
                 {
                     "name": "",
-                    "id": "8b33b757-0724-4f3f-9f59-611ad7003e5b",
-                    "path": "",
+                    "id": "70a1d626-9ea9-49f1-86e3-18980905751e",
+                    "path": "<Keyboard>/k",
                     "interactions": "Press",
                     "processors": "",
-                    "groups": "Joystick",
+                    "groups": "Keyboard",
                     "action": "South",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -202,11 +202,11 @@
                 },
                 {
                     "name": "",
-                    "id": "3ec7175c-9e93-480b-8b93-6863b670a1b1",
-                    "path": "",
+                    "id": "0b275cc0-a919-4f6d-b982-d5d0140dc3d7",
+                    "path": "<Keyboard>/j",
                     "interactions": "Press",
                     "processors": "",
-                    "groups": "Joystick",
+                    "groups": "Keyboard",
                     "action": "West",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -224,11 +224,11 @@
                 },
                 {
                     "name": "",
-                    "id": "dd2c18e7-fffb-422b-bea1-f550366e17b2",
-                    "path": "",
+                    "id": "c3f7a63b-3f97-4a06-9e12-2ada73b05d85",
+                    "path": "<Keyboard>/l",
                     "interactions": "Press",
                     "processors": "",
-                    "groups": "Joystick",
+                    "groups": "Keyboard",
                     "action": "East",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -246,11 +246,11 @@
                 },
                 {
                     "name": "",
-                    "id": "6feb68bb-73b6-4644-a5ea-775482a772ae",
-                    "path": "",
+                    "id": "f0b7ef22-4bb9-455c-b760-b8b818a588f2",
+                    "path": "<Keyboard>/space",
                     "interactions": "Press",
                     "processors": "",
-                    "groups": "Joystick",
+                    "groups": "Keyboard",
                     "action": "Start",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -268,11 +268,11 @@
                 },
                 {
                     "name": "",
-                    "id": "5e3cf8ab-6f84-4659-a909-8c63059ef988",
-                    "path": "<Joystick>/stick/up",
+                    "id": "2673540f-24dd-488e-a03b-3ec3e7651c78",
+                    "path": "<Keyboard>/e",
                     "interactions": "Press",
                     "processors": "",
-                    "groups": "Joystick",
+                    "groups": "Keyboard",
                     "action": "Up",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -293,11 +293,11 @@
             ]
         },
         {
-            "name": "Joystick",
-            "bindingGroup": "Joystick",
+            "name": "Keyboard",
+            "bindingGroup": "Keyboard",
             "devices": [
                 {
-                    "devicePath": "<Joystick>",
+                    "devicePath": "<Keyboard>",
                     "isOptional": true,
                     "isOR": false
                 }

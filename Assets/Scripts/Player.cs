@@ -9,10 +9,10 @@ namespace Mew
     {
         [SerializeField] private SpriteRenderer background;
 
-        private Color _color;
         private Vector2 _coordinates;
         private int _playerNumber;
         private int _arrowsLeft;
+        private bool _initialized = false;
 
         public bool ArrowsSpawnable => _arrowsLeft > 0;
 
@@ -23,12 +23,12 @@ namespace Mew
 
         public void Initialize(Color color, Vector2 coordinates, int playerNumber)
         {
-            _color = color;
             background.color = color;
             _coordinates = coordinates;
-            transform.position = new Vector3(coordinates.x, 0, coordinates.y);
+            transform.position = Utils.CoordinatesTo3D(coordinates);
             _arrowsLeft = Constants.Settings.MaxArrowsPerPlayer;
             _playerNumber = playerNumber;
+            _initialized = true;
         }
 
         public void OnUp(CallbackContext c)
@@ -41,9 +41,9 @@ namespace Mew
         { if (c.performed) OnMove(Direction.Right); }
         public void OnMove(Direction direction)
         {
-            if (!Game.Instance) return;
+            if (!Game.Instance || !_initialized) return;
             _coordinates = Utils.PropagateOffset(_coordinates, direction);
-            transform.position = new Vector3(_coordinates.x, 0, _coordinates.y);
+            transform.position = Utils.CoordinatesTo3D(_coordinates);
         }
 
         public void OnNorth(CallbackContext c)
@@ -56,13 +56,14 @@ namespace Mew
         { if (c.performed) OnPlace(Direction.Right); }
         public void OnPlace(Direction direction)
         {
-            if (!Game.Instance) return;
+            if (!Game.Instance || !_initialized) return;
             Game.Instance.PlaceArrow(_coordinates, direction, _playerNumber);
         }
 
         public void OnStart(CallbackContext c)
         {
-            Menu.Instance?.StartGame();
+            if (!Menu.Instance || !_initialized || !c.performed) return;
+            Menu.Instance.StartGame();
         }
 
         void Start()

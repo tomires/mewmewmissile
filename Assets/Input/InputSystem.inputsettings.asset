@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SupportedDevices:
   - Gamepad
-  - Joystick
+  - Keyboard
   m_UpdateMode: 2
   m_CompensateForScreenOrientation: 1
   m_FilterNoiseOnCurrent: 0

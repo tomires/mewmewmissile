@@ -19,7 +19,6 @@ namespace Mew.Objects
         [SerializeField] private Material materialEven;
         [SerializeField] private Material materialOdd;
 
-        private Vector2 _coordinates;
         private Direction _directionOverride = Direction.Default;
         private BlockerSetting _blockers;
         private bool _arrowPlaceable;
@@ -28,7 +27,6 @@ namespace Mew.Objects
 
         public void Initialize(Vector2 coordinates, BlockerSetting blockers, bool arrowPlaceable)
         {
-            _coordinates = coordinates;
             _blockers = blockers;
             _arrowPlaceable = arrowPlaceable;
 
@@ -45,7 +43,7 @@ namespace Mew.Objects
         public Direction GetNextDirection(Direction direction)
         {
             if (_directionOverride != Direction.Default)
-                return _directionOverride;
+                direction = _directionOverride;
 
             var index = (int)direction;
             while (true)
@@ -91,7 +89,7 @@ namespace Mew.Objects
             arrow.transform.rotation = Quaternion.Euler(90, angle, 0);
             color.color = Constants.Colors.PlayerColor[player];
             ToggleArrow(true);
-            PlayerRoster.Instance.UpdateArrowCount(_player, true);
+            PlayerRoster.Instance.UpdateArrowCount(_player, false);
             _removeArrowCoroutine = StartCoroutine(RemoveArrowHelper());
         }
 
@@ -100,7 +98,7 @@ namespace Mew.Objects
             if (_removeArrowCoroutine != null)
                 StopCoroutine(_removeArrowCoroutine);
 
-            PlayerRoster.Instance.UpdateArrowCount(_player, false);
+            PlayerRoster.Instance.UpdateArrowCount(_player, true);
             _directionOverride = Direction.Default;
             _player = -1;
             ToggleArrow(false);

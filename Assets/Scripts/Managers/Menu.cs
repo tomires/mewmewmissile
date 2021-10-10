@@ -1,6 +1,4 @@
-using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.InputSystem;
 using System.Collections;
 using Mew.Models;
 
@@ -16,6 +14,7 @@ namespace Mew.Managers
 
         public void StartGame()
         {
+            PlayerRoster.Instance.JoiningEnabled = false;
             SceneManager.LoadScene(Constants.Scenes.Game);
         }
     }
