@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Mew.Objects;
 
 namespace Mew.Managers
 {
@@ -32,14 +33,14 @@ namespace Mew.Managers
             _players.Add(player);
         }
 
-        public void UpdateArrowCount(int player, bool increase)
+        public void PropagateArrowPlaced(int player, Block block)
         {
-            _players[player].UpdateArrowCount(increase);
+            _players[player].PropagateArrowPlaced(block);
         }
 
-        public bool GetArrowsSpawnable(int player)
+        public void PropagateArrowRemoved(int player, Block block)
         {
-            return _players[player].ArrowsSpawnable;
+            _players[player].PropagateArrowRemoved(block);
         }
 
         public void PropagateMouseGain(int player)

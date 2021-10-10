@@ -65,16 +65,7 @@ namespace Mew.Objects
 
         public void PlaceArrow(int player, Direction direction)
         {
-            if (!_arrowPlaceable) return;
-            if (_player != -1 && _player != player) return;
-
-            if (_player == player)
-            {
-                RemoveArrow();
-                return;
-            }
-
-            if (!PlayerRoster.Instance.GetArrowsSpawnable(player)) return;
+            if (!_arrowPlaceable || _player != -1) return;
 
             _directionOverride = direction;
             _player = player;
@@ -89,16 +80,16 @@ namespace Mew.Objects
             arrow.transform.rotation = Quaternion.Euler(90, angle, 0);
             color.color = Constants.Colors.PlayerColor[player];
             ToggleArrow(true);
-            PlayerRoster.Instance.UpdateArrowCount(_player, false);
+            PlayerRoster.Instance.PropagateArrowPlaced(_player, this);
             _removeArrowCoroutine = StartCoroutine(RemoveArrowHelper());
         }
 
-        private void RemoveArrow()
+        public void RemoveArrow()
         {
             if (_removeArrowCoroutine != null)
                 StopCoroutine(_removeArrowCoroutine);
 
-            PlayerRoster.Instance.UpdateArrowCount(_player, true);
+            PlayerRoster.Instance.PropagateArrowRemoved(_player, this);
             _directionOverride = Direction.Default;
             _player = -1;
             ToggleArrow(false);

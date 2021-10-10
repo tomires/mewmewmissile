@@ -1,7 +1,10 @@
 using UnityEngine;
 using static UnityEngine.InputSystem.InputAction;
+using System.Collections.Generic;
+using System.Linq;
 using Mew.Managers;
 using Mew.Models;
+using Mew.Objects;
 
 namespace Mew
 {
@@ -11,9 +14,8 @@ namespace Mew
 
         private Vector2 _coordinates;
         private int _playerNumber;
-        private int _arrowsLeft;
         private bool _initialized = false;
-
+        private Queue<Block> _placedArrows = new Queue<Block>();
 
         private int _score = 0;
         private int Score
@@ -28,15 +30,24 @@ namespace Mew
         public void PropagateMouseGain() => Score++;
         public void PropagateCatHit() => Score = Mathf.FloorToInt(Constants.Settings.CatHitMultiplier * Score);
 
-        public bool ArrowsSpawnable => _arrowsLeft > 0;
-        public void UpdateArrowCount(bool increase) => _arrowsLeft += increase ? 1 : -1;
+        public void PropagateArrowPlaced(Block block)
+        {
+            if (_placedArrows.Count >= Constants.Settings.MaxArrowsPerPlayer)
+                _placedArrows.Dequeue().RemoveArrow();
+            _placedArrows.Enqueue(block);
+        }
+
+        public void PropagateArrowRemoved(Block block)
+        {
+            if (_placedArrows.Contains(block))
+                _placedArrows = new Queue<Block>(_placedArrows.Where(b => b != block));
+        }
 
         public void Initialize(Color color, Vector2 coordinates, int playerNumber)
         {
             background.color = color;
             _coordinates = coordinates;
             transform.position = Utils.CoordinatesTo3D(coordinates);
-            _arrowsLeft = Constants.Settings.MaxArrowsPerPlayer;
             _playerNumber = playerNumber;
             _initialized = true;
         }
