@@ -22,6 +22,8 @@ namespace Mew.Constants
     public static class Settings
     {
         public static readonly Vector2 BoardSize = new Vector2(12, 9);
+        public static readonly float DefaultSpeed = 4f;
+        public static readonly float DefaultSpawnRate = 1.25f;
     }   
 
     public static class Paths

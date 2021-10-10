@@ -18,13 +18,16 @@ namespace Mew.Managers
 
         public GameObject MousePrefab => mousePrefab;
         public GameObject CatPrefab => catPrefab;
-        public float Speed => _currentSpeed;
+        public float Speed => 1f / _currentSpeed;
+        public float SpawnRate => 1f / _currentSpawnRate;
 
         private List<Block> _blocks = new List<Block>();
         private List<Spawner> _spawners = new List<Spawner>();
         private List<Rocket> _rockets = new List<Rocket>();
         private List<GameObject> _holes = new List<GameObject>();
-        private float _currentSpeed = 0.3f;
+
+        private float _currentSpeed = Constants.Settings.DefaultSpeed;
+        private float _currentSpawnRate = Constants.Settings.DefaultSpawnRate;
 
         public Direction GetNextMove(Vector2 coordinates, Direction startDirection)
         {

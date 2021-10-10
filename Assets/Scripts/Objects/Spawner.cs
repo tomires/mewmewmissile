@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using Mew.Models;
 using Mew.Managers;
+using System.Collections.Generic;
 
 namespace Mew.Objects
 {
@@ -21,10 +22,26 @@ namespace Mew.Objects
         {
             while (true)
             {
-                var mouse = Instantiate(Game.Instance.MousePrefab).GetComponent<Creature>();
-                mouse.Initialize(_coordinates, _direction);
-                yield return new WaitForSeconds(1f);
+                var random = Random.Range(0, 24);
+                if (new List<int> { 0 }.Contains(random))
+                    SpawnCat();
+                else if (new List<int> { 2, 4, 6, 8, 10, 12, 14, 16, 18 }.Contains(random))
+                    SpawnMouse();
+
+                yield return new WaitForSeconds(Game.Instance.SpawnRate);
             }
+        }
+
+        private void SpawnMouse()
+        {
+            var mouse = Instantiate(Game.Instance.MousePrefab).GetComponent<Creature>();
+            mouse.Initialize(_coordinates, _direction);
+        }
+
+        private void SpawnCat()
+        {
+            var cat = Instantiate(Game.Instance.CatPrefab).GetComponent<Creature>();
+            cat.Initialize(_coordinates, _direction);
         }
     }
 }

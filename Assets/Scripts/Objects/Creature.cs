@@ -7,6 +7,7 @@ namespace Mew.Objects
 {
     public class Creature : MonoBehaviour
     {
+        [SerializeField] float speedMultiplier = 1f;
         private Direction _direction;
         private Vector2 _coordinates;
 
@@ -25,7 +26,7 @@ namespace Mew.Objects
                 _direction = Game.Instance.GetNextMove(_coordinates, _direction);
                 Rotate();
                 var animation = StartCoroutine(AnimateMove());
-                yield return new WaitForSeconds(Game.Instance.Speed);
+                yield return new WaitForSeconds(Game.Instance.Speed * 1 / speedMultiplier);
                 StopCoroutine(animation);
                 _coordinates += GetOffset();
             }
@@ -49,7 +50,7 @@ namespace Mew.Objects
             var step = 0f;
             while(true)
             {
-                step += Time.deltaTime / Game.Instance.Speed;
+                step += Time.deltaTime / (Game.Instance.Speed * 1 / speedMultiplier);
                 transform.position = new Vector3(_coordinates.x + offset.x * step, 0, _coordinates.y + offset.y * step);
                 yield return null;
             }
@@ -65,6 +66,12 @@ namespace Mew.Objects
                 Direction.Right => Vector2.right,
                 _ => Vector2.zero
             };
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (gameObject.tag == "Mouse" && other.tag != "Mouse")
+                Destroy(gameObject);
         }
     }
 }
