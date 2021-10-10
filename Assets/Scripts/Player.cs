@@ -45,12 +45,15 @@ namespace Mew
 
         public void Initialize(Color color, Vector2 coordinates, int playerNumber)
         {
+            Menu.Instance?.ShowController(playerNumber);
             background.color = color;
             _coordinates = coordinates;
             transform.position = Utils.CoordinatesTo3D(coordinates);
             _playerNumber = playerNumber;
             _initialized = true;
         }
+
+        #region Input
 
         public void OnUp(CallbackContext c)
         { if (c.performed) OnMove(Direction.Up); }
@@ -62,6 +65,7 @@ namespace Mew
         { if (c.performed) OnMove(Direction.Right); }
         public void OnMove(Direction direction)
         {
+            Menu.Instance?.BumpController(_playerNumber);
             if (!Game.Instance || !_initialized) return;
             _coordinates = Utils.PropagateOffset(_coordinates, direction);
             transform.position = Utils.CoordinatesTo3D(_coordinates);
@@ -77,6 +81,7 @@ namespace Mew
         { if (c.performed) OnPlace(Direction.Right); }
         public void OnPlace(Direction direction)
         {
+            Menu.Instance?.BumpController(_playerNumber);
             if (!Game.Instance || !_initialized) return;
             Game.Instance.PlaceArrow(_coordinates, direction, _playerNumber);
         }
@@ -86,6 +91,8 @@ namespace Mew
             if (!Menu.Instance || !_initialized || !c.performed) return;
             Menu.Instance.StartGame();
         }
+
+        #endregion Input
 
         void Start()
         {
