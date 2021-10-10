@@ -36,8 +36,8 @@ namespace Mew.Constants
         public static readonly float DefaultSpawnRate = 1.25f;
         public static readonly float ArrowLifetime = 20f;
         public static readonly float CatHitMultiplier = 0.66f;
-        public static readonly float ModeMouseChance = 0.2f;
-        public static readonly float BonusMouseChance = 0.1f;
+        public static readonly float ModeMouseChance = 0.05f;
+        public static readonly float BonusMouseChance = 0.02f;
         public static readonly int MouseBonusValue = 50;
         public static readonly int MaxMouseCount = 50;
         public static readonly int MaxCatCount = 4;

@@ -93,6 +93,7 @@ GameObject:
   - component: {fileID: 2463894595010079225}
   - component: {fileID: 7447071617007670176}
   - component: {fileID: 2593003661671170895}
+  - component: {fileID: 7362304799747929695}
   m_Layer: 0
   m_Name: Selector
   m_TagString: Untagged
@@ -303,6 +304,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   background: {fileID: 5581321892549602692}
+--- !u!95 &7362304799747929695
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2988793356364346179}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1fe9128a28175404a91e211327a1e1e4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &7606643833791030008
 GameObject:
   m_ObjectHideFlags: 0
