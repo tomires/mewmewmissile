@@ -10,12 +10,17 @@ namespace Mew.Objects
         [SerializeField] float speedMultiplier = 1f;
         private Direction _direction;
         private Vector2 _coordinates;
+        private bool _isMouse => gameObject.CompareTag(Constants.Tags.Mouse);
+        private bool _isCat => gameObject.CompareTag(Constants.Tags.Cat);
 
         public void Initialize(Vector2 coordinates, Direction direction)
         {
             _direction = direction;
             _coordinates = coordinates;
             StartCoroutine(Move());
+
+            if (_isMouse) Game.Instance.UpdateMouseCount(true);
+            else if (_isCat) Game.Instance.UpdateCatCount(true);
         }
 
         private IEnumerator Move()
@@ -70,8 +75,16 @@ namespace Mew.Objects
 
         private void OnTriggerEnter(Collider other)
         {
-            if (gameObject.tag == "Mouse" && other.tag != "Mouse")
+            if (_isMouse && !other.CompareTag(Constants.Tags.Mouse))
+            {
+                Game.Instance.UpdateMouseCount(false);
                 Destroy(gameObject);
+            }
+            else if(_isCat && other.CompareTag(Constants.Tags.Death))
+            {
+                Game.Instance.UpdateCatCount(false);
+                Destroy(gameObject);
+            }
         }
     }
 }

@@ -20,6 +20,8 @@ namespace Mew.Managers
         public GameObject CatPrefab => catPrefab;
         public float Speed => 1f / _currentSpeed;
         public float SpawnRate => 1f / _currentSpawnRate;
+        public bool MouseSpawnable => _mouseCount < Constants.Settings.MaxMouseCount;
+        public bool CatSpawnable => _catCount < Constants.Settings.MaxCatCount;
 
         private List<Block> _blocks = new List<Block>();
         private List<Spawner> _spawners = new List<Spawner>();
@@ -28,6 +30,18 @@ namespace Mew.Managers
 
         private float _currentSpeed = Constants.Settings.DefaultSpeed;
         private float _currentSpawnRate = Constants.Settings.DefaultSpawnRate;
+        private int _mouseCount = 0;
+        private int _catCount = 0;
+
+        public void UpdateMouseCount(bool increase)
+        {
+            _mouseCount += increase ? 1 : -1;
+        }
+
+        public void UpdateCatCount(bool increase)
+        {
+            _catCount += increase ? 1 : -1;
+        }
 
         public Direction GetNextMove(Vector2 coordinates, Direction startDirection)
         {

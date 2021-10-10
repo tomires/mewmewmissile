@@ -34,12 +34,14 @@ namespace Mew.Objects
 
         private void SpawnMouse()
         {
+            if (!Game.Instance.MouseSpawnable) return;
             var mouse = Instantiate(Game.Instance.MousePrefab).GetComponent<Creature>();
             mouse.Initialize(_coordinates, _direction);
         }
 
         private void SpawnCat()
         {
+            if (!Game.Instance.CatSpawnable) return;
             var cat = Instantiate(Game.Instance.CatPrefab).GetComponent<Creature>();
             cat.Initialize(_coordinates, _direction);
         }

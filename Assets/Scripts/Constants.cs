@@ -19,11 +19,27 @@ namespace Mew.Constants
         public static readonly string Game = "Game";
     }
 
+    public static class Tags
+    {
+        public static readonly string Mouse = "Mouse";
+        public static readonly string Cat = "Cat";
+        public static readonly string Death = "Death";
+    }
+
     public static class Settings
     {
         public static readonly Vector2 BoardSize = new Vector2(12, 9);
         public static readonly float DefaultSpeed = 4f;
         public static readonly float DefaultSpawnRate = 1.25f;
+        public static readonly int MaxMouseCount = 50;
+        public static readonly int MaxCatCount = 4;
+        public static readonly Vector2[] SelectorPositions = new Vector2[]
+        {
+            new Vector2(5, 5),
+            new Vector2(6, 5),
+            new Vector2(5, 6),
+            new Vector2(6, 6)
+        };
     }   
 
     public static class Paths
