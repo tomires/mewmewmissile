@@ -31,8 +31,10 @@ namespace Mew.Constants
         public static readonly Vector2 BoardSize = new Vector2(12, 9);
         public static readonly float DefaultSpeed = 4f;
         public static readonly float DefaultSpawnRate = 1.25f;
+        public static readonly float ArrowLifetime = 20f;
         public static readonly int MaxMouseCount = 50;
         public static readonly int MaxCatCount = 4;
+        public static readonly int MaxArrowsPerPlayer = 3;
         public static readonly Vector2[] SelectorPositions = new Vector2[]
         {
             new Vector2(5, 5),

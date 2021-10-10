@@ -1,5 +1,7 @@
 using UnityEngine;
+using System.Collections;
 using Mew.Models;
+using Mew.Managers;
 
 namespace Mew.Objects
 {
@@ -20,12 +22,15 @@ namespace Mew.Objects
         private Vector2 _coordinates;
         private Direction _directionOverride = Direction.Default;
         private BlockerSetting _blockers;
+        private bool _arrowPlaceable;
         private int _player = -1;
+        private Coroutine _removeArrowCoroutine;
 
-        public void Initialize(Vector2 coordinates, BlockerSetting blockers)
+        public void Initialize(Vector2 coordinates, BlockerSetting blockers, bool arrowPlaceable)
         {
             _coordinates = coordinates;
             _blockers = blockers;
+            _arrowPlaceable = arrowPlaceable;
 
             block.GetComponent<Renderer>().material =
                 Mathf.FloorToInt(coordinates.x + coordinates.y) % 2 == 0
@@ -62,7 +67,16 @@ namespace Mew.Objects
 
         public void PlaceArrow(int player, Direction direction)
         {
-            if (_player != -1) return;
+            if (!_arrowPlaceable) return;
+            if (_player != -1 && _player != player) return;
+
+            if (_player == player)
+            {
+                RemoveArrow();
+                return;
+            }
+
+            if (!PlayerRoster.Instance.GetArrowsSpawnable(player)) return;
 
             _directionOverride = direction;
             _player = player;
@@ -77,13 +91,25 @@ namespace Mew.Objects
             arrow.transform.rotation = Quaternion.Euler(90, angle, 0);
             color.color = Constants.Colors.PlayerColor[player];
             ToggleArrow(true);
+            PlayerRoster.Instance.UpdateArrowCount(_player, true);
+            _removeArrowCoroutine = StartCoroutine(RemoveArrowHelper());
         }
 
-        public void RemoveArrow()
+        private void RemoveArrow()
         {
+            if (_removeArrowCoroutine != null)
+                StopCoroutine(_removeArrowCoroutine);
+
+            PlayerRoster.Instance.UpdateArrowCount(_player, false);
             _directionOverride = Direction.Default;
             _player = -1;
             ToggleArrow(false);
+        }
+
+        private IEnumerator RemoveArrowHelper()
+        {
+            yield return new WaitForSecondsRealtime(Constants.Settings.ArrowLifetime);
+            RemoveArrow();
         }
 
         private void ToggleArrow(bool enabled)

@@ -48,6 +48,11 @@ namespace Mew.Managers
             return GetBlock(coordinates).GetNextDirection(startDirection);
         }
 
+        public void PlaceArrow(Vector2 coordinates, Direction direction, int player)
+        {
+            GetBlock(coordinates).PlaceArrow(player, direction);
+        }
+
         void Start()
         {
             InitializeBoard("stage1.mew");
@@ -82,7 +87,8 @@ namespace Mew.Managers
                     ParseField(board[y][x], out blockerSetting, out rocket, out hole, out spawnerDirection);
 
                     var coordinates = new Vector2(x, Constants.Settings.BoardSize.y - y - 1);
-                    SpawnBlock(coordinates, blockerSetting);
+                    var arrowPlaceable = !hole && !rocket && spawnerDirection == Direction.Default;
+                    SpawnBlock(coordinates, blockerSetting, arrowPlaceable);
 
                     if (rocket)
                         SpawnRocket(coordinates, player++);
@@ -96,11 +102,11 @@ namespace Mew.Managers
             }
         }
 
-        private void SpawnBlock(Vector2 coordinates, BlockerSetting blockerSetting)
+        private void SpawnBlock(Vector2 coordinates, BlockerSetting blockerSetting, bool arrowPlaceable)
         {
             var block = Instantiate(blockPrefab).GetComponent<Block>();
-            block.Initialize(coordinates, blockerSetting);
-            block.transform.position = new Vector3(coordinates.x, 0, coordinates.y);
+            block.Initialize(coordinates, blockerSetting, arrowPlaceable);
+            block.transform.position = Utils.CoordinatesTo3D(coordinates);
             _blocks.Add(block);
         }
 
@@ -108,7 +114,7 @@ namespace Mew.Managers
         {
             var rocket = Instantiate(rocketPrefab).GetComponent<Rocket>();
             rocket.Initialize(player);
-            rocket.transform.position = new Vector3(coordinates.x, 0, coordinates.y);
+            rocket.transform.position = Utils.CoordinatesTo3D(coordinates);
             _rockets.Add(rocket);
         }
 
@@ -116,14 +122,14 @@ namespace Mew.Managers
         {
             var spawner = Instantiate(spawnerPrefab).GetComponent<Spawner>();
             spawner.Initialize(coordinates, direction);
-            spawner.transform.position = new Vector3(coordinates.x, 0, coordinates.y);
+            spawner.transform.position = Utils.CoordinatesTo3D(coordinates);
             _spawners.Add(spawner);
         }
 
         private void SpawnHole(Vector2 coordinates)
         {
             var hole = Instantiate(holePrefab);
-            hole.transform.position = new Vector3(coordinates.x, 0, coordinates.y);
+            hole.transform.position = Utils.CoordinatesTo3D(coordinates);
             _holes.Add(hole);
         }
 

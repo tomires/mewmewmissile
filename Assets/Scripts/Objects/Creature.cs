@@ -33,7 +33,7 @@ namespace Mew.Objects
                 var animation = StartCoroutine(AnimateMove());
                 yield return new WaitForSeconds(Game.Instance.Speed * 1 / speedMultiplier);
                 StopCoroutine(animation);
-                _coordinates += GetOffset();
+                _coordinates += Utils.GetOffset(_direction);
             }
         }
 
@@ -51,7 +51,7 @@ namespace Mew.Objects
 
         private IEnumerator AnimateMove()
         {
-            var offset = GetOffset();
+            var offset = Utils.GetOffset(_direction);
             var step = 0f;
             while(true)
             {
@@ -59,18 +59,6 @@ namespace Mew.Objects
                 transform.position = new Vector3(_coordinates.x + offset.x * step, 0, _coordinates.y + offset.y * step);
                 yield return null;
             }
-        }
-
-        private Vector2 GetOffset()
-        {
-            return _direction switch
-            {
-                Direction.Up => Vector2.up,
-                Direction.Down => Vector2.down,
-                Direction.Left => Vector2.left,
-                Direction.Right => Vector2.right,
-                _ => Vector2.zero
-            };
         }
 
         private void OnTriggerEnter(Collider other)

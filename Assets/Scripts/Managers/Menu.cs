@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 using System.Collections;
 using Mew.Models;
 
@@ -13,10 +14,9 @@ namespace Mew.Managers
             Audio.Instance.PlayMusic(GameState.Menu);
         }
 
-        void Update()
+        public void StartGame()
         {
-            if (Input.GetKeyDown(KeyCode.Space))
-                SceneManager.LoadScene(Constants.Scenes.Game);
+            SceneManager.LoadScene(Constants.Scenes.Game);
         }
     }
 }
