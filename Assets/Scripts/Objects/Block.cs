@@ -17,18 +17,18 @@ namespace Mew.Objects
         [SerializeField] private Material materialEven;
         [SerializeField] private Material materialOdd;
 
-        private Vector2 _position;
-        private Direction _direction = Direction.Default;
+        private Vector2 _coordinates;
+        private Direction _directionOverride = Direction.Default;
         private BlockerSetting _blockers;
         private int _player = -1;
 
-        public void Initialize(Vector2 position, BlockerSetting blockers)
+        public void Initialize(Vector2 coordinates, BlockerSetting blockers)
         {
-            _position = position;
+            _coordinates = coordinates;
             _blockers = blockers;
 
             block.GetComponent<Renderer>().material =
-                Mathf.FloorToInt(position.x + position.y) % 2 == 0
+                Mathf.FloorToInt(coordinates.x + coordinates.y) % 2 == 0
                 ? materialOdd : materialEven;
             blockerDown.SetActive(blockers.down);
             blockerLeft.SetActive(blockers.left);
@@ -37,11 +37,34 @@ namespace Mew.Objects
             ToggleArrow(false);
         }
 
+        public Direction GetNextDirection(Direction direction)
+        {
+            if (_directionOverride != Direction.Default)
+                return _directionOverride;
+
+            var index = (int)direction;
+            while (true)
+            {
+                if (index == 1 && !_blockers.up)
+                    return Direction.Up;
+                else if (index == 2 && !_blockers.right)
+                    return Direction.Right;
+                else if (index == 3 && !_blockers.down)
+                    return Direction.Down;
+                else if (index == 4 && !_blockers.left)
+                    return Direction.Left;
+
+                index++;
+                if (index == 5)
+                    index = 1;
+            }
+        }
+
         public void PlaceArrow(int player, Direction direction)
         {
             if (_player != -1) return;
 
-            _direction = direction;
+            _directionOverride = direction;
             _player = player;
 
             var angle = direction switch
@@ -58,7 +81,7 @@ namespace Mew.Objects
 
         public void RemoveArrow()
         {
-            _direction = Direction.Default;
+            _directionOverride = Direction.Default;
             _player = -1;
             ToggleArrow(false);
         }

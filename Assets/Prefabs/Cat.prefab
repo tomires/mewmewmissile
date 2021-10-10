@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1791979960732041262}
   - component: {fileID: 5986961801762920714}
+  - component: {fileID: 2931942871644895149}
   m_Layer: 0
   m_Name: Cat
-  m_TagString: Death
+  m_TagString: Cat
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -51,6 +52,18 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2931942871644895149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1411232980579195540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa3875ed5fbff46f493bf058718f1cc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2274293636493436204
 GameObject:
   m_ObjectHideFlags: 0

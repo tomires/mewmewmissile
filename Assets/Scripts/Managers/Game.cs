@@ -16,10 +16,20 @@ namespace Mew.Managers
         [SerializeField] private GameObject spawnerPrefab;
         [SerializeField] private GameObject holePrefab;
 
+        public GameObject MousePrefab => mousePrefab;
+        public GameObject CatPrefab => catPrefab;
+        public float Speed => _currentSpeed;
+
         private List<Block> _blocks = new List<Block>();
         private List<Spawner> _spawners = new List<Spawner>();
         private List<Rocket> _rockets = new List<Rocket>();
         private List<GameObject> _holes = new List<GameObject>();
+        private float _currentSpeed = 0.3f;
+
+        public Direction GetNextMove(Vector2 coordinates, Direction startDirection)
+        {
+            return GetBlock(coordinates).GetNextDirection(startDirection);
+        }
 
         void Start()
         {
@@ -54,7 +64,7 @@ namespace Mew.Managers
                     Direction spawnerDirection;
                     ParseField(board[y][x], out blockerSetting, out rocket, out hole, out spawnerDirection);
 
-                    var coordinates = new Vector2(x, Constants.Settings.BoardSize.y - y);
+                    var coordinates = new Vector2(x, Constants.Settings.BoardSize.y - y - 1);
                     SpawnBlock(coordinates, blockerSetting);
 
                     if (rocket)
@@ -88,7 +98,7 @@ namespace Mew.Managers
         private void SpawnSpawner(Vector2 coordinates, Direction direction)
         {
             var spawner = Instantiate(spawnerPrefab).GetComponent<Spawner>();
-            spawner.Initialize(direction);
+            spawner.Initialize(coordinates, direction);
             spawner.transform.position = new Vector3(coordinates.x, 0, coordinates.y);
             _spawners.Add(spawner);
         }
@@ -118,6 +128,12 @@ namespace Mew.Managers
                 'l' => Direction.Left,
                 _ => Direction.Default
             };
+        }
+
+        private Block GetBlock(Vector2 coordinates)
+        {
+            var ySize = (int)Constants.Settings.BoardSize.y;
+            return _blocks[ySize - (int)coordinates.y - 1 + ySize * (int)coordinates.x];
         }
     }
 }
