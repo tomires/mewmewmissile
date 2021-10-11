@@ -23,6 +23,7 @@ namespace Mew
             set
             {
                 _score = value;
+                Game.Instance.PropagatePlayerScore(_playerNumber, value);
             }
             get => _score;
         }

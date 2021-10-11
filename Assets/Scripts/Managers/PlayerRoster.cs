@@ -11,6 +11,8 @@ namespace Mew.Managers
         private List<Player> _players = new List<Player>();
         private PlayerInputManager _playerManager;
 
+        public int PlayerCount => _players.Count;
+
         public bool JoiningEnabled
         {
             set

@@ -1,16 +1,18 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System.Collections;
 using System.IO;
 using Mew.Objects;
 using Mew.Models;
-using System.Collections;
+using Mew.UI;
 
 namespace Mew.Managers
 {
     public class Game : MonoSingleton<Game>
     {
         [SerializeField] private Text timeLeftText;
+        [SerializeField] private Transform ScoreCardParent;
 
         [Header("Prefabs")]
         [SerializeField] private GameObject blockPrefab;
@@ -19,6 +21,7 @@ namespace Mew.Managers
         [SerializeField] private GameObject rocketPrefab;
         [SerializeField] private GameObject spawnerPrefab;
         [SerializeField] private GameObject holePrefab;
+        [SerializeField] private GameObject scoreCardPrefab;
 
         public GameObject MousePrefab => mousePrefab;
         public GameObject CatPrefab => catPrefab;
@@ -31,12 +34,18 @@ namespace Mew.Managers
         private List<Spawner> _spawners = new List<Spawner>();
         private List<Rocket> _rockets = new List<Rocket>();
         private List<GameObject> _holes = new List<GameObject>();
+        private List<ScoreCard> _scoreCards = new List<ScoreCard>();
 
         private float _currentSpeed = Constants.Settings.DefaultSpeed;
         private float _currentSpawnRate = Constants.Settings.DefaultSpawnRate;
         private int _mouseCount = 0;
         private int _catCount = 0;
         public int _timeLeft;
+
+        public void PropagatePlayerScore(int player, int score)
+        {
+            _scoreCards[player].SetScore(score);
+        }
 
         public void UpdateMouseCount(bool increase)
         {
@@ -61,7 +70,18 @@ namespace Mew.Managers
         void Start()
         {
             InitializeBoard("stage1.mew");
+            InitializeScoreCards();
             Audio.Instance.PlayMusic(GameState.Match);
+        }
+
+        private void InitializeScoreCards()
+        {
+            for (int p = 0; p < PlayerRoster.Instance.PlayerCount; p++)
+            {
+                var scoreCard = Instantiate(scoreCardPrefab, ScoreCardParent).GetComponent<ScoreCard>();
+                scoreCard.Initialize(p);
+                _scoreCards.Add(scoreCard);
+            }
         }
 
         private void InitializeBoard(string file)
