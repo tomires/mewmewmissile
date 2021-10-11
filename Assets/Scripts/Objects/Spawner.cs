@@ -23,9 +23,11 @@ namespace Mew.Objects
             while (true)
             {
                 var random = Random.Range(0, 24);
-                if (new List<int> { 0 }.Contains(random))
+                if (new List<int> { 0 }.Contains(random)
+                    && Game.Instance.CurrentMode != GameState.MouseMania)
                     SpawnCat();
-                else if (new List<int> { 2, 4, 6, 8, 10, 12, 14, 16, 18 }.Contains(random))
+                else if (new List<int> { 2, 4, 6, 8, 10, 12, 14, 16, 18 }.Contains(random)
+                    && Game.Instance.CurrentMode != GameState.CatMania)
                     SpawnMouse();
 
                 yield return new WaitForSeconds(Game.Instance.SpawnRate);

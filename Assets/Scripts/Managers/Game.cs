@@ -30,9 +30,9 @@ namespace Mew.Managers
         public bool MouseSpawnable => _mouseCount < Constants.Settings.MaxMouseCount;
         public bool CatSpawnable => _catCount < Constants.Settings.MaxCatCount;
 
-        private GameState CurrentMode
+        public GameState CurrentMode
         {
-            set
+            private set
             {
                 _currentMode = value;
                 Audio.Instance.PlayMusic(value);
@@ -86,16 +86,38 @@ namespace Mew.Managers
                 GameState.SpeedUp,
                 GameState.SlowDown,
                 GameState.MouseMania,
-                GameState.CatMania,
+                GameState.CatMania/*,
                 GameState.PlaceArrowsAgain,
-                GameState.EverybodyMove
+                GameState.EverybodyMove*/
             };
 
-            CurrentMode = modes[Random.Range(0, modes.Length - 1)];
+            CurrentMode = modes[Random.Range(0, modes.Length)];
             if (_changeModeBackCoroutine != null)
                 StopCoroutine(_changeModeBackCoroutine);
             _changeModeBackCoroutine = StartCoroutine(ChangeModeBack());
-            Debug.Log(CurrentMode);
+
+            if (CurrentMode == GameState.MouseMania
+                || CurrentMode == GameState.CatMania)
+                foreach (var creature in FindObjectsOfType<Creature>())
+                    Destroy(creature.gameObject);
+
+            var speedMultiplier = CurrentMode switch
+            {
+                GameState.SpeedUp => Constants.Settings.SpeedUpMultiplier,
+                GameState.SlowDown => Constants.Settings.SlowDownMultiplier,
+                _ => 1f
+            };
+
+            _currentSpeed = speedMultiplier * Constants.Settings.DefaultSpeed;
+
+            var _spawnRateMultiplier = CurrentMode switch
+            {
+                GameState.CatMania => Constants.Settings.CatManiaSpawnRateMultiplier,
+                GameState.MouseMania => Constants.Settings.MouseManiaSpawnRateMultiplier,
+                _ => 1f
+            };
+
+            _currentSpawnRate = _spawnRateMultiplier * Constants.Settings.DefaultSpawnRate;
         }
 
         public IEnumerator ChangeModeBack()
@@ -104,6 +126,8 @@ namespace Mew.Managers
             CurrentMode = _timeLeft <= Constants.Settings.TimeRunningOutTime
                 ? GameState.TimeRunningOut
                 : GameState.Match;
+            _currentSpeed = Constants.Settings.DefaultSpeed;
+            _currentSpawnRate = Constants.Settings.DefaultSpawnRate;
             _changeModeBackCoroutine = null;
         }
 
