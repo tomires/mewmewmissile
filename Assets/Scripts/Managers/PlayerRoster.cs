@@ -57,11 +57,6 @@ namespace Mew.Managers
             _players[player].PropagateCatHit();
         }
 
-        public void ChangeMode()
-        {
-            Debug.Log("Change mode");
-        }
-
         void Start()
         {
             DontDestroyOnLoad(gameObject);

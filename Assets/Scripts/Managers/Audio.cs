@@ -36,7 +36,7 @@ namespace Mew.Managers
                 GameState.CatMania => catMania,
                 GameState.RoundOver => roundOver,
                 GameState.GameOver => gameOver,
-                _ => null
+                _ => match
             };
 
             if(music)

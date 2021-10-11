@@ -30,17 +30,29 @@ namespace Mew.Managers
         public bool MouseSpawnable => _mouseCount < Constants.Settings.MaxMouseCount;
         public bool CatSpawnable => _catCount < Constants.Settings.MaxCatCount;
 
+        private GameState CurrentMode
+        {
+            set
+            {
+                _currentMode = value;
+                Audio.Instance.PlayMusic(value);
+            }
+            get => _currentMode;
+        }
+
         private List<Block> _blocks = new List<Block>();
         private List<Spawner> _spawners = new List<Spawner>();
         private List<Rocket> _rockets = new List<Rocket>();
         private List<GameObject> _holes = new List<GameObject>();
         private List<ScoreCard> _scoreCards = new List<ScoreCard>();
 
+        private GameState _currentMode = GameState.Match;
         private float _currentSpeed = Constants.Settings.DefaultSpeed;
         private float _currentSpawnRate = Constants.Settings.DefaultSpawnRate;
         private int _mouseCount = 0;
         private int _catCount = 0;
-        public int _timeLeft;
+        private int _timeLeft;
+        private Coroutine _changeModeBackCoroutine;
 
         public void PropagatePlayerScore(int player, int score)
         {
@@ -65,6 +77,34 @@ namespace Mew.Managers
         public void PlaceArrow(Vector2 coordinates, Direction direction, int player)
         {
             GetBlock(coordinates).PlaceArrow(player, direction);
+        }
+
+        public void ChangeMode()
+        {
+            GameState[] modes = new GameState[]
+            {
+                GameState.SpeedUp,
+                GameState.SlowDown,
+                GameState.MouseMania,
+                GameState.CatMania,
+                GameState.PlaceArrowsAgain,
+                GameState.EverybodyMove
+            };
+
+            CurrentMode = modes[Random.Range(0, modes.Length - 1)];
+            if (_changeModeBackCoroutine != null)
+                StopCoroutine(_changeModeBackCoroutine);
+            _changeModeBackCoroutine = StartCoroutine(ChangeModeBack());
+            Debug.Log(CurrentMode);
+        }
+
+        public IEnumerator ChangeModeBack()
+        {
+            yield return new WaitForSecondsRealtime(Constants.Settings.ModeTime);
+            CurrentMode = _timeLeft <= Constants.Settings.TimeRunningOutTime
+                ? GameState.TimeRunningOut
+                : GameState.Match;
+            _changeModeBackCoroutine = null;
         }
 
         void Start()
@@ -140,8 +180,9 @@ namespace Mew.Managers
                 timeLeftText.text = $"{ Mathf.FloorToInt(_timeLeft / 60) }:{ string.Format("{0:00}", _timeLeft % 60) }";
 
 
-                if (_timeLeft == 30)
-                    Audio.Instance.PlayMusic(GameState.TimeRunningOut);
+                if (_timeLeft == Constants.Settings.TimeRunningOutTime
+                    && CurrentMode == GameState.Match)
+                    CurrentMode = GameState.TimeRunningOut;
             }
 
             EndMatch();
@@ -149,7 +190,7 @@ namespace Mew.Managers
 
         private void EndMatch()
         {
-            Debug.Log("MATCH END");
+            CurrentMode = GameState.RoundOver;
         }
 
         private void SpawnBlock(Vector2 coordinates, BlockerSetting blockerSetting, bool arrowPlaceable)

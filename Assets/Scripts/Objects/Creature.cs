@@ -71,7 +71,7 @@ namespace Mew.Objects
                     var mouseType = ((Mouse)this).Type;
                     rocket.PropagateMouseGain(mouseType == Mouse.MouseType.Bonus);
                     if (mouseType == Mouse.MouseType.Mode)
-                        PlayerRoster.Instance.ChangeMode();
+                        Game.Instance.ChangeMode();
                 }
                 else if (_isCat)
                     rocket.PropagateCatHit();
