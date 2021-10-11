@@ -6,10 +6,18 @@ namespace Mew.Constants
     {
         public static readonly Color[] PlayerColor = new Color[]
         {
-            Color.blue,
-            Color.red,
-            Color.green,
-            Color.yellow
+            new Color(0.353f, 0.373f, 0.839f),
+            new Color(0.651f, 0.18f, 0.18f),
+            new Color(0f, 0.533f, 0.306f),
+            new Color(0.686f, 0.667f, 0.153f)
+        };
+
+        public static readonly Color[] PlayerColorLight = new Color[]
+        {
+            new Color(0.651f, 0.875f, 1f),
+            new Color(1f, 0.773f, 0.773f),
+            new Color(0.761f, 1f, 0.8f),
+            new Color(1f, 0.976f, 0.761f)
         };
     }
 

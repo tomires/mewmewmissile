@@ -411,7 +411,6 @@ MonoBehaviour:
   spawnerPrefab: {fileID: 4542731131821087558, guid: 9a0af876ed200406fafe8db303aa5893, type: 3}
   holePrefab: {fileID: 8722926688142823760, guid: b57f104e6477143589937f71f043a52f, type: 3}
   scoreCardPrefab: {fileID: 6385765875419451438, guid: 88fc75b877d754fa8b300f35bf62fc08, type: 3}
-  _timeLeft: 0
 --- !u!4 &735835832
 Transform:
   m_ObjectHideFlags: 0
@@ -626,7 +625,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 500, y: 0}
+  m_SizeDelta: {x: 550, y: 0}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1500044808
 MonoBehaviour:
@@ -641,9 +640,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 20
+    m_Left: 70
     m_Right: 20
-    m_Top: 20
+    m_Top: 80
     m_Bottom: 20
   m_ChildAlignment: 0
   m_Spacing: 20

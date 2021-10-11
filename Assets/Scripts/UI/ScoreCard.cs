@@ -13,6 +13,7 @@ namespace Mew.UI
         {
             playerNameText.text = $"Player {player + 1}";
             GetComponent<Image>().color = Constants.Colors.PlayerColor[player];
+            scoreText.color = playerNameText.color = Constants.Colors.PlayerColorLight[player];
         }
 
         public void SetScore(int score)

@@ -1,20 +1,28 @@
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 using Mew.Models;
+using Mew.UI;
 
 namespace Mew.Managers
 {
     public class Menu : MonoSingleton<Menu>
     {
-        [SerializeField] List<Image> controllers;
+        [SerializeField] GameObject controllerPrefab;
+        [SerializeField] Transform controllersParent;
+        private List<Controller> _controllers = new List<Controller>();
 
         IEnumerator Start()
         {
             yield return null;
             Audio.Instance.PlayMusic(GameState.Menu);
+
+            for (int c = 0; c < 4; c++)
+            {
+                var controller = Instantiate(controllerPrefab, controllersParent);
+                _controllers.Add(controller.GetComponent<Controller>());
+            }
         }
 
         public void StartGame()
@@ -25,12 +33,12 @@ namespace Mew.Managers
 
         public void ShowController(int player)
         {
-            controllers[player].color = Constants.Colors.PlayerColor[player];
+            _controllers[player].ShowController(player);
         }
 
         public void BumpController(int player)
         {
-            controllers[player].GetComponent<Animator>().Play("ControllerBump");
+            _controllers[player].BumpController();
         }
     }
 }
