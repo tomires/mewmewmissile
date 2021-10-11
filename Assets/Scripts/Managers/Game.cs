@@ -1,13 +1,17 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections.Generic;
 using System.IO;
 using Mew.Objects;
 using Mew.Models;
+using System.Collections;
 
 namespace Mew.Managers
 {
     public class Game : MonoSingleton<Game>
     {
+        [SerializeField] private Text timeLeftText;
+
         [Header("Prefabs")]
         [SerializeField] private GameObject blockPrefab;
         [SerializeField] private GameObject catPrefab;
@@ -32,6 +36,7 @@ namespace Mew.Managers
         private float _currentSpawnRate = Constants.Settings.DefaultSpawnRate;
         private int _mouseCount = 0;
         private int _catCount = 0;
+        public int _timeLeft;
 
         public void UpdateMouseCount(bool increase)
         {
@@ -100,6 +105,31 @@ namespace Mew.Managers
                         SpawnHole(coordinates);
                 }
             }
+
+            StartCoroutine(CountDownTime());
+        }
+
+        private IEnumerator CountDownTime()
+        {
+            _timeLeft = Constants.Settings.MatchTime;
+
+            while(_timeLeft > 0)
+            {
+                yield return new WaitForSecondsRealtime(1f);
+                _timeLeft--;
+                timeLeftText.text = $"{ Mathf.FloorToInt(_timeLeft / 60) }:{ string.Format("{0:00}", _timeLeft % 60) }";
+
+
+                if (_timeLeft == 30)
+                    Audio.Instance.PlayMusic(GameState.TimeRunningOut);
+            }
+
+            EndMatch();
+        }
+
+        private void EndMatch()
+        {
+            Debug.Log("MATCH END");
         }
 
         private void SpawnBlock(Vector2 coordinates, BlockerSetting blockerSetting, bool arrowPlaceable)
