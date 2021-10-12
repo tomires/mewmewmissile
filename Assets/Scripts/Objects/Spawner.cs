@@ -20,6 +20,8 @@ namespace Mew.Objects
 
         private IEnumerator Spawn()
         {
+            yield return new WaitForSeconds(Constants.Settings.StartCooldown);
+
             while (true)
             {
                 var random = Random.Range(0, 24);

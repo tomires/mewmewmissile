@@ -403,7 +403,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeLeftText: {fileID: 842783927}
-  ScoreCardParent: {fileID: 1500044807}
+  scoreCardParent: {fileID: 1500044807}
+  cameraAnimator: {fileID: 1052148611}
   blockPrefab: {fileID: 2988793356364346179, guid: 388bcce61438d4fbbb85551ce8ccdb45, type: 3}
   catPrefab: {fileID: 1411232980579195540, guid: e120d7099321f4df094bd899105f8e9b, type: 3}
   mousePrefab: {fileID: 829816775202005781, guid: c892b366b719c4ecc9219228e1aa760b, type: 3}
@@ -515,6 +516,7 @@ GameObject:
   - component: {fileID: 1052148610}
   - component: {fileID: 1052148609}
   - component: {fileID: 1052148608}
+  - component: {fileID: 1052148611}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -588,6 +590,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!95 &1052148611
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1052148607}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b6a29fa074e744064a4f55342e2c532b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1500044806
 GameObject:
   m_ObjectHideFlags: 0

@@ -25,6 +25,12 @@ namespace Mew.Managers
             }
         }
 
+        public void ToggleInteractivity(bool enabled)
+        {
+            foreach (var player in _players)
+                player.ToggleInteractivity(enabled);
+        }
+
         public void OnPlayerJoined(PlayerInput obj)
         {
             var player = obj.GetComponent<Player>();

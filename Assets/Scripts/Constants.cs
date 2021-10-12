@@ -40,6 +40,7 @@ namespace Mew.Constants
         public static readonly Vector2 BoardSize = new Vector2(12, 9);
         public static readonly int MatchTime = 180;
         public static readonly int TimeRunningOutTime = 30;
+        public static readonly float StartCooldown = 2f;
         public static readonly float ModeTime = 15f;
         public static readonly float DefaultSpeed = 4f;
         public static readonly float SpeedUpMultiplier = 2f;

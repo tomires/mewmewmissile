@@ -11,10 +11,11 @@ namespace Mew
     public class Player : MonoBehaviour
     {
         [SerializeField] private SpriteRenderer background;
+        [SerializeField] private SpriteRenderer foreground;
 
         private Vector2 _coordinates;
         private int _playerNumber;
-        private bool _initialized = false;
+        private bool _enabled = false;
         private Queue<Block> _placedArrows = new Queue<Block>();
 
         private int _score = 0;
@@ -63,7 +64,13 @@ namespace Mew
             _coordinates = coordinates;
             transform.position = Utils.CoordinatesTo3D(coordinates);
             _playerNumber = playerNumber;
-            _initialized = true;
+        }
+
+        public void ToggleInteractivity(bool enabled)
+        {
+            background.enabled = enabled;
+            foreground.enabled = enabled;
+            _enabled = enabled;
         }
 
         #region Input
@@ -79,7 +86,7 @@ namespace Mew
         public void OnMove(Direction direction)
         {
             Menu.Instance?.BumpController(_playerNumber);
-            if (!Game.Instance || !_initialized) return;
+            if (!Game.Instance || !_enabled) return;
             _coordinates = Utils.PropagateOffset(_coordinates, direction);
             transform.position = Utils.CoordinatesTo3D(_coordinates);
         }
@@ -95,13 +102,13 @@ namespace Mew
         public void OnPlace(Direction direction)
         {
             Menu.Instance?.BumpController(_playerNumber);
-            if (!Game.Instance || !_initialized) return;
+            if (!Game.Instance || !_enabled) return;
             Game.Instance.PlaceArrow(_coordinates, direction, _playerNumber);
         }
 
         public void OnStart(CallbackContext c)
         {
-            if (!Menu.Instance || !_initialized || !c.performed) return;
+            if (!Menu.Instance || !c.performed) return;
             Menu.Instance.StartGame();
         }
 

@@ -12,7 +12,8 @@ namespace Mew.Managers
     public class Game : MonoSingleton<Game>
     {
         [SerializeField] private Text timeLeftText;
-        [SerializeField] private Transform ScoreCardParent;
+        [SerializeField] private Transform scoreCardParent;
+        [SerializeField] private Animator cameraAnimator;
 
         [Header("Prefabs")]
         [SerializeField] private GameObject blockPrefab;
@@ -153,7 +154,7 @@ namespace Mew.Managers
         {
             for (int p = 0; p < PlayerRoster.Instance.PlayerCount; p++)
             {
-                var scoreCard = Instantiate(scoreCardPrefab, ScoreCardParent).GetComponent<ScoreCard>();
+                var scoreCard = Instantiate(scoreCardPrefab, scoreCardParent).GetComponent<ScoreCard>();
                 scoreCard.Initialize(p);
                 _scoreCards.Add(scoreCard);
             }
@@ -201,18 +202,22 @@ namespace Mew.Managers
                 }
             }
 
+            cameraAnimator.Play("CameraMatchBegin");
             StartCoroutine(CountDownTime());
         }
 
         private IEnumerator CountDownTime()
         {
             _timeLeft = Constants.Settings.MatchTime;
+            timeLeftText.text = Utils.TimeToHumanReadable(_timeLeft);
+            yield return new WaitForSeconds(Constants.Settings.StartCooldown);
+            PlayerRoster.Instance.ToggleInteractivity(true);
 
-            while(_timeLeft > 0)
+            while (_timeLeft > 0)
             {
                 yield return new WaitForSecondsRealtime(1f);
                 _timeLeft--;
-                timeLeftText.text = $"{ Mathf.FloorToInt(_timeLeft / 60) }:{ string.Format("{0:00}", _timeLeft % 60) }";
+                timeLeftText.text = Utils.TimeToHumanReadable(_timeLeft);
 
 
                 if (_timeLeft == Constants.Settings.TimeRunningOutTime
@@ -232,6 +237,14 @@ namespace Mew.Managers
                 _rockets[leader].BlastRocket();
 
             PlayerRoster.Instance.PropagateWins(leaders);
+            PlayerRoster.Instance.ToggleInteractivity(false);
+            Invoke("MoveCameraOnMatchEnd", 2.0f);
+        }
+
+        private void MoveCameraOnMatchEnd()
+        {
+
+            cameraAnimator.Play("CameraMatchEnd");
         }
 
         private void SpawnBlock(Vector2 coordinates, BlockerSetting blockerSetting, bool arrowPlaceable)

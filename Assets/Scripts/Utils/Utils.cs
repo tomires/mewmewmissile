@@ -41,5 +41,10 @@ namespace Mew
             else
                 return value;
         }
+
+        public static string TimeToHumanReadable(int time)
+        {
+            return $"{ Mathf.FloorToInt(time / 60) }:{ string.Format("{0:00}", time % 60) }";
+        }
     }
 }
