@@ -1,5 +1,6 @@
 using UnityEngine;
 using Mew.Models;
+using Mew.Managers;
 
 namespace Mew.Objects
 {
@@ -14,7 +15,20 @@ namespace Mew.Objects
             Default, Bonus, Mode
         }
 
-        public MouseType Type => _type;
+        public MouseType Type
+        {
+            set
+            {
+                _type = value;
+                mouseRenderer.material = value switch
+                {
+                    MouseType.Bonus => bonusMaterial,
+                    MouseType.Mode => modeMaterial,
+                    _ => defaultMaterial
+                };
+            }
+            get => _type;
+        }
         private MouseType _type;
 
         protected override float SpeedMultiplier => Constants.Settings.MouseSpeedMultiplier;
@@ -23,13 +37,7 @@ namespace Mew.Objects
         {
             base.Initialize(coordinates, direction);
 
-            _type = GenerateMouseType();
-            mouseRenderer.material = _type switch
-            {
-                MouseType.Bonus => bonusMaterial,
-                MouseType.Mode => modeMaterial,
-                _ => defaultMaterial
-            };
+            Type = GenerateMouseType();
         }
 
         private MouseType GenerateMouseType()
@@ -38,7 +46,7 @@ namespace Mew.Objects
             if (random < Mathf.CeilToInt(Constants.Settings.BonusMouseChance * 100f))
                 return MouseType.Bonus;
             else if (random < Mathf.CeilToInt((Constants.Settings.BonusMouseChance + Constants.Settings.ModeMouseChance) * 100f))
-                return MouseType.Mode;
+                return Game.Instance.CurrentMode == GameState.Match ? MouseType.Mode : MouseType.Default;
             else
                 return MouseType.Default;
         }

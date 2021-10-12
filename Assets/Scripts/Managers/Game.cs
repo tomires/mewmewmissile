@@ -107,7 +107,6 @@ namespace Mew.Managers
                 GameState.SlowDown => Constants.Settings.SlowDownMultiplier,
                 _ => 1f
             };
-
             _currentSpeed = speedMultiplier * Constants.Settings.DefaultSpeed;
 
             var _spawnRateMultiplier = CurrentMode switch
@@ -116,8 +115,10 @@ namespace Mew.Managers
                 GameState.MouseMania => Constants.Settings.MouseManiaSpawnRateMultiplier,
                 _ => 1f
             };
-
             _currentSpawnRate = _spawnRateMultiplier * Constants.Settings.DefaultSpawnRate;
+
+            foreach (var mouse in FindObjectsOfType<Mouse>())
+                mouse.Type = Mouse.MouseType.Default;
         }
 
         public IEnumerator ChangeModeBack()
