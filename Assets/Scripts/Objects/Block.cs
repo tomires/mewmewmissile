@@ -24,6 +24,7 @@ namespace Mew.Objects
         private bool _arrowPlaceable;
         private int _player = -1;
         private Coroutine _removeArrowCoroutine;
+        private int _arrowHits;
 
         public void Initialize(Vector2 coordinates, BlockerSetting blockers, bool arrowPlaceable)
         {
@@ -69,6 +70,7 @@ namespace Mew.Objects
 
             _directionOverride = direction;
             _player = player;
+            _arrowHits = 0;
 
             var angle = direction switch
             {
@@ -105,6 +107,13 @@ namespace Mew.Objects
         {
             arrow.SetActive(enabled);
             color.gameObject.SetActive(enabled);
+        }
+
+        public void DamageTile()
+        {
+            if (_directionOverride == Direction.Default) return;
+            if (++_arrowHits == Constants.Settings.ArrowHitpoints)
+                RemoveArrow();
         }
     }
 }

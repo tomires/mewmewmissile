@@ -57,6 +57,7 @@ namespace Mew.Constants
         public static readonly int MaxMouseCount = 50;
         public static readonly int MaxCatCount = 4;
         public static readonly int MaxArrowsPerPlayer = 3;
+        public static readonly int ArrowHitpoints = 2;
         public static readonly Vector2[] SelectorPositions = new Vector2[]
         {
             new Vector2(5, 5),

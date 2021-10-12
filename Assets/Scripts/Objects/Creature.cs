@@ -29,6 +29,7 @@ namespace Mew.Objects
             {
                 transform.position = new Vector3(_coordinates.x, 0, _coordinates.y);
                 _direction = Game.Instance.GetNextMove(_coordinates, _direction);
+                if (_isCat) Game.Instance.DamageTile(_coordinates);
                 Rotate();
                 var animation = StartCoroutine(AnimateMove());
                 yield return new WaitForSeconds(Game.Instance.Speed * 1 / SpeedMultiplier);

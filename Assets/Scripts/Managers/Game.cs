@@ -74,6 +74,11 @@ namespace Mew.Managers
             return GetBlock(coordinates).GetNextDirection(startDirection);
         }
 
+        public void DamageTile(Vector2 coordinates)
+        {
+            GetBlock(coordinates).DamageTile();
+        }
+
         public void PlaceArrow(Vector2 coordinates, Direction direction, int player)
         {
             GetBlock(coordinates).PlaceArrow(player, direction);
