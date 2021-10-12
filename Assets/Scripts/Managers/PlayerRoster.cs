@@ -102,6 +102,16 @@ namespace Mew.Managers
                 _players[p].PropagateWin();
         }
 
+        public void ResetSelectorPositions()
+        {
+            for (int p = 0; p < _players.Count; p++)
+            {
+                var color = Constants.Colors.PlayerColor[p];
+                var coordinates = Constants.Settings.SelectorPositions[p];
+                _players[p].Initialize(color, coordinates, p);
+            }
+        }
+
         void Start()
         {
             DontDestroyOnLoad(gameObject);

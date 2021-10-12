@@ -231,6 +231,7 @@ namespace Mew.Managers
 
             _currentMode = GameState.Match;
             cameraAnimator.Play("CameraMatchBegin");
+            PlayerRoster.Instance.ResetSelectorPositions();
             StartCoroutine(CountDownTime());
         }
 

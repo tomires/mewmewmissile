@@ -42,6 +42,8 @@ namespace Mew.Managers
             if(music)
             {
                 _source.clip = music;
+                _source.loop = state == GameState.GameOver
+                    ? false : true;
                 _source.Play();
             }
         }
