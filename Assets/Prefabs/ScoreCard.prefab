@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 174129752148099687}
   - component: {fileID: 5635029893763040676}
   - component: {fileID: 8924278684814705480}
+  - component: {fileID: 2883897351566830411}
   m_Layer: 5
   m_Name: Win
   m_TagString: Untagged
@@ -75,6 +76,25 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!95 &2883897351566830411
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1707870088046068907}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: aa630bca27318492c9c308285a7e41a9, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &5946550867965836950
 GameObject:
   m_ObjectHideFlags: 0
@@ -228,6 +248,7 @@ GameObject:
   - component: {fileID: 6385765874907775617}
   - component: {fileID: 6385765874907775619}
   - component: {fileID: 6385765874907775618}
+  - component: {fileID: 4696554742090929469}
   m_Layer: 5
   m_Name: ScoreText
   m_TagString: Untagged
@@ -296,6 +317,25 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: 0
+--- !u!95 &4696554742090929469
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6385765874907775616}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4ad7748c7d283416486f89c2ef71872b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &6385765875419451438
 GameObject:
   m_ObjectHideFlags: 0
@@ -388,5 +428,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreText: {fileID: 6385765874907775618}
+  scoreTextAnimator: {fileID: 4696554742090929469}
   playerNameText: {fileID: 6385765873380844166}
   winIcon: {fileID: 8924278684814705480}

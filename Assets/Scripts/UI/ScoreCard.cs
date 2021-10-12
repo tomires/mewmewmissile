@@ -7,6 +7,7 @@ namespace Mew.UI
     public class ScoreCard : MonoBehaviour
     {
         [SerializeField] private Text scoreText;
+        [SerializeField] private Animator scoreTextAnimator;
         [SerializeField] private Text playerNameText;
         [SerializeField] private Image winIcon;
 
@@ -21,12 +22,14 @@ namespace Mew.UI
         public void SetScore(int score)
         {
             scoreText.text = score.ToString();
+            scoreTextAnimator.Play("ScoreTextIncrement");
         }
 
         public void AddWin()
         {
             var win = Instantiate(winIcon, winIcon.transform.parent);
             win.gameObject.SetActive(true);
+            win.GetComponent<Animator>().Play("WinIconFadeIn");
         }
     }
 }
