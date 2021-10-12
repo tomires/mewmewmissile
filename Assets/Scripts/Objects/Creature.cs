@@ -64,10 +64,9 @@ namespace Mew.Objects
 
         private void OnTriggerEnter(Collider other)
         {
-            if (Game.Instance.CurrentMode == GameState.RoundOver) return;
-
             if (other.CompareTag(Constants.Tags.Rocket))
             {
+                if (Game.Instance.CurrentMode == GameState.RoundOver) return;
                 var rocket = other.GetComponent<Rocket>();
                 if (_isMouse)
                 {

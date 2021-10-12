@@ -34,7 +34,7 @@ namespace Mew
             private set
             {
                 _wins = value;
-                Game.Instance.PropagatePlayerWins(_playerNumber, value);
+                Game.Instance.PropagatePlayerWin(_playerNumber);
             }
             get => _wins;
         }

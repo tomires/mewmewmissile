@@ -59,9 +59,9 @@ namespace Mew.Managers
             _scoreCards[player].SetScore(score);
         }
 
-        public void PropagatePlayerWins(int player, int wins)
+        public void PropagatePlayerWin(int player)
         {
-            _scoreCards[player].SetWins(wins);
+            _scoreCards[player].AddWin();
         }
 
         public void UpdateMouseCount(bool increase)
