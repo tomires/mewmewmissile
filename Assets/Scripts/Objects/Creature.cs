@@ -77,22 +77,21 @@ namespace Mew.Objects
                 }
                 else if (_isCat)
                     rocket.PropagateCatHit();
-                Destroy();
+                Destroy(gameObject);
             }
 
             if (_isMouse && !other.CompareTag(Constants.Tags.Mouse))
-                Destroy();
+                Destroy(gameObject);
             else if (_isCat && other.CompareTag(Constants.Tags.Death))
-                Destroy();
+                Destroy(gameObject);
         }
 
-        private void Destroy()
+        private void OnDestroy()
         {
             if (_isMouse)
                 Game.Instance.UpdateMouseCount(false);
             else if (_isCat)
                 Game.Instance.UpdateCatCount(false);
-            Destroy(gameObject);
         }
     }
 }

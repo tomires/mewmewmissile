@@ -48,7 +48,7 @@ namespace Mew.Constants
         public static readonly float CatSpeedMultiplier = 0.7f;
         public static readonly float DefaultSpawnRate = 1.25f;
         public static readonly float MouseManiaSpawnRateMultiplier = 4f;
-        public static readonly float CatManiaSpawnRateMultiplier = 50f;
+        public static readonly float CatManiaSpawnRateMultiplier = 8f;
         public static readonly float ArrowLifetime = 20f;
         public static readonly float CatHitMultiplier = 0.66f;
         public static readonly float ModeMouseChance = 0.05f;
