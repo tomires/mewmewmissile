@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Linq;
 using Mew.Objects;
 
 namespace Mew.Managers
@@ -55,6 +56,30 @@ namespace Mew.Managers
         {
             if (player >= _players.Count) return;
             _players[player].PropagateCatHit();
+        }
+
+        public List<int> GetLeaders()
+        {
+            var scores = _players.Select(p => p.Score).ToList();
+            var leaders = new List<int>();
+            var maxScore = -1;
+            for (int p = 0; p < scores.Count; p++)
+            {
+                if (scores[p] > maxScore)
+                {
+                    maxScore = scores[p];
+                    leaders.Clear();
+                }
+                if (scores[p] >= maxScore)
+                    leaders.Add(p);
+            }
+            return leaders;
+        }
+
+        public void PropagateWins(List<int> players)
+        {
+            foreach (var p in players)
+                _players[p].PropagateWin();
         }
 
         void Start()

@@ -25,12 +25,24 @@ namespace Mew.Objects
         {
             Audio.Instance.PlayOneShot(Audio.Sound.Mouse);
             PlayerRoster.Instance.PropagateMouseGain(_player, bonus);
+            BumpRocket();
         }
 
         public void PropagateCatHit()
         {
             Audio.Instance.PlayOneShot(Audio.Sound.Explosion);
             PlayerRoster.Instance.PropagateCatHit(_player);
+            BumpRocket();
+        }
+
+        public void BlastRocket()
+        {
+            GetComponent<Animator>().Play("RocketBlastOff");
+        }
+
+        private void BumpRocket()
+        {
+            GetComponent<Animator>().Play("RocketBump");
         }
     }
 }

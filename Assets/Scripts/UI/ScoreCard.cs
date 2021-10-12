@@ -20,5 +20,10 @@ namespace Mew.UI
         {
             scoreText.text = score.ToString();
         }
+
+        public void SetWins(int wins)
+        {
+            //scoreText.text = score.ToString();
+        }
     }
 }

@@ -59,6 +59,11 @@ namespace Mew.Managers
             _scoreCards[player].SetScore(score);
         }
 
+        public void PropagatePlayerWins(int player, int wins)
+        {
+            _scoreCards[player].SetWins(wins);
+        }
+
         public void UpdateMouseCount(bool increase)
         {
             _mouseCount += increase ? 1 : -1;
@@ -221,6 +226,12 @@ namespace Mew.Managers
         private void EndMatch()
         {
             CurrentMode = GameState.RoundOver;
+            var leaders = PlayerRoster.Instance.GetLeaders();
+
+            foreach(var leader in leaders)
+                _rockets[leader].BlastRocket();
+
+            PlayerRoster.Instance.PropagateWins(leaders);
         }
 
         private void SpawnBlock(Vector2 coordinates, BlockerSetting blockerSetting, bool arrowPlaceable)

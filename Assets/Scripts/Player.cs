@@ -18,9 +18,9 @@ namespace Mew
         private Queue<Block> _placedArrows = new Queue<Block>();
 
         private int _score = 0;
-        private int Score
+        public int Score
         {
-            set
+            private set
             {
                 _score = value;
                 Game.Instance.PropagatePlayerScore(_playerNumber, value);
@@ -28,8 +28,20 @@ namespace Mew
             get => _score;
         }
 
+        private int _wins;
+        public int Wins
+        {
+            private set
+            {
+                _wins = value;
+                Game.Instance.PropagatePlayerWins(_playerNumber, value);
+            }
+            get => _wins;
+        }
+
         public void PropagateMouseGain(bool bonus) => Score += bonus ? Constants.Settings.MouseBonusValue : 1;
         public void PropagateCatHit() => Score = Mathf.FloorToInt(Constants.Settings.CatHitMultiplier * Score);
+        public void PropagateWin() => Wins++;
 
         public void PropagateArrowPlaced(Block block)
         {
