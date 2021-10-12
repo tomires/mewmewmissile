@@ -2,7 +2,7 @@ newmtl New_Material_2
 Kd 0 0.7327332 1
 d 1
 
-newmtl New_Material_6
-Kd 0 0 0
+newmtl New_Material_4
+Kd 1 0.653165 0
 d 1
 
