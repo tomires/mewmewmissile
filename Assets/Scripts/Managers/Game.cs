@@ -163,6 +163,14 @@ namespace Mew.Managers
 
             PlayerRoster.Instance.PrepareForNextMatch();
 
+            if (_changeModeBackCoroutine != null)
+            {
+                StopCoroutine(_changeModeBackCoroutine);
+                _currentSpeed = Constants.Settings.DefaultSpeed;
+                _currentSpawnRate = Constants.Settings.DefaultSpawnRate;
+                _changeModeBackCoroutine = null;
+            }
+
             var winner = PlayerRoster.Instance.GetWinner();
             if (winner == -1)
                 InitializeBoard("stage1.mew");
