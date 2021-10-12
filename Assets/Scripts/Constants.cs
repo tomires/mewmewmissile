@@ -25,6 +25,7 @@ namespace Mew.Constants
     {
         public static readonly string Menu = "Menu";
         public static readonly string Game = "Game";
+        public static readonly string Results = "Results";
     }
 
     public static class Tags
@@ -40,6 +41,7 @@ namespace Mew.Constants
         public static readonly Vector2 BoardSize = new Vector2(12, 9);
         public static readonly int MatchTime = 180;
         public static readonly int TimeRunningOutTime = 30;
+        public static readonly int WinCount = 3;
         public static readonly float StartCooldown = 2f;
         public static readonly float ModeTime = 15f;
         public static readonly float DefaultSpeed = 4f;

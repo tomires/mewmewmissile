@@ -52,6 +52,12 @@ namespace Mew.Managers
             _players[player].PropagateArrowRemoved(block);
         }
 
+        public void PrepareForNextMatch()
+        {
+            foreach (var player in _players)
+                player.PrepareForNextMatch();
+        }
+
         public void PropagateMouseGain(int player, bool bonus)
         {
             if (player >= _players.Count) return;
@@ -80,6 +86,14 @@ namespace Mew.Managers
                     leaders.Add(p);
             }
             return leaders;
+        }
+
+        public int GetWinner()
+        {
+            for (int p = 0; p < _players.Count; p++)
+                if (_players[p].Wins == Constants.Settings.WinCount)
+                    return p;
+            return -1;
         }
 
         public void PropagateWins(List<int> players)

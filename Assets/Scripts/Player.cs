@@ -57,6 +57,12 @@ namespace Mew
                 _placedArrows = new Queue<Block>(_placedArrows.Where(b => b != block));
         }
 
+        public void PrepareForNextMatch()
+        {
+            _placedArrows.Clear();
+            Score = 0;
+        }
+
         public void Initialize(Color color, Vector2 coordinates, int playerNumber)
         {
             Menu.Instance?.ShowController(playerNumber);
@@ -86,6 +92,8 @@ namespace Mew
         public void OnMove(Direction direction)
         {
             Menu.Instance?.BumpController(_playerNumber);
+            Game.Instance?.ProceedToNextMatch();
+
             if (!Game.Instance || !_enabled) return;
             _coordinates = Utils.PropagateOffset(_coordinates, direction);
             transform.position = Utils.CoordinatesTo3D(_coordinates);
@@ -102,6 +110,8 @@ namespace Mew
         public void OnPlace(Direction direction)
         {
             Menu.Instance?.BumpController(_playerNumber);
+            Game.Instance?.ProceedToNextMatch();
+
             if (!Game.Instance || !_enabled) return;
             Game.Instance.PlaceArrow(_coordinates, direction, _playerNumber);
         }

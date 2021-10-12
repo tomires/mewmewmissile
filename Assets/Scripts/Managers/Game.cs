@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using System.Collections;
 using System.IO;
@@ -54,6 +55,7 @@ namespace Mew.Managers
         private int _catCount = 0;
         private int _timeLeft;
         private Coroutine _changeModeBackCoroutine;
+        private bool _readyForNextMatch = false;
 
         public void PropagatePlayerScore(int player, int score)
         {
@@ -143,11 +145,35 @@ namespace Mew.Managers
             _changeModeBackCoroutine = null;
         }
 
+        public void ProceedToNextMatch()
+        {
+            if (!_readyForNextMatch) return;
+            _readyForNextMatch = false;
+
+            foreach (var block in _blocks)
+                Destroy(block.gameObject);
+            foreach (var spawner in _spawners)
+                Destroy(spawner.gameObject);
+            foreach (var rocket in _rockets)
+                Destroy(rocket.gameObject);
+            foreach (var hole in _holes)
+                Destroy(hole.gameObject);
+            foreach (var creature in FindObjectsOfType<Creature>())
+                Destroy(creature.gameObject);
+
+            PlayerRoster.Instance.PrepareForNextMatch();
+
+            var winner = PlayerRoster.Instance.GetWinner();
+            if (winner == -1)
+                InitializeBoard("stage1.mew");
+            else
+                SceneManager.LoadScene(Constants.Scenes.Results);
+        }
+
         void Start()
         {
             InitializeBoard("stage1.mew");
             InitializeScoreCards();
-            Audio.Instance.PlayMusic(GameState.Match);
         }
 
         private void InitializeScoreCards()
@@ -162,6 +188,7 @@ namespace Mew.Managers
 
         private void InitializeBoard(string file)
         {
+            Audio.Instance.PlayMusic(GameState.Match);
             List<List<string>> board = new List<List<string>>();
             using (var reader = new StreamReader($"{Constants.Paths.StagesFolder}/{file}"))
             {
@@ -202,6 +229,7 @@ namespace Mew.Managers
                 }
             }
 
+            _currentMode = GameState.Match;
             cameraAnimator.Play("CameraMatchBegin");
             StartCoroutine(CountDownTime());
         }
@@ -243,8 +271,8 @@ namespace Mew.Managers
 
         private void MoveCameraOnMatchEnd()
         {
-
             cameraAnimator.Play("CameraMatchEnd");
+            _readyForNextMatch = true;
         }
 
         private void SpawnBlock(Vector2 coordinates, BlockerSetting blockerSetting, bool arrowPlaceable)
