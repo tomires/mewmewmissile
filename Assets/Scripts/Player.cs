@@ -91,9 +91,7 @@ namespace Mew
         { if (c.performed) OnMove(Direction.Right); }
         public void OnMove(Direction direction)
         {
-            Menu.Instance?.BumpController(_playerNumber);
-            Game.Instance?.ProceedToNextMatch();
-
+            OnAllButtons();
             if (!Game.Instance || !_enabled) return;
             _coordinates = Utils.PropagateOffset(_coordinates, direction);
             transform.position = Utils.CoordinatesTo3D(_coordinates);
@@ -109,19 +107,24 @@ namespace Mew
         { if (c.performed) OnPlace(Direction.Right); }
         public void OnPlace(Direction direction)
         {
-            Menu.Instance?.BumpController(_playerNumber);
-            Game.Instance?.ProceedToNextMatch();
-
+            OnAllButtons();
             if (!Game.Instance || !_enabled) return;
             Game.Instance.PlaceArrow(_coordinates, direction, _playerNumber);
         }
 
         public void OnStart(CallbackContext c)
         {
+            OnAllButtons();
             if (!Menu.Instance || !c.performed) return;
             Menu.Instance.StartGame();
         }
 
+        private void OnAllButtons()
+        {
+            Menu.Instance?.BumpController(_playerNumber);
+            Game.Instance?.ProceedToNextMatch();
+            Results.Instance?.ReturnToMenu();
+        }
         #endregion Input
 
         void Start()

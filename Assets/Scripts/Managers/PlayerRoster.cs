@@ -112,6 +112,16 @@ namespace Mew.Managers
             }
         }
 
+        public void RemoveAllPlayers()
+        {
+            foreach (var player in _players)
+            {
+                player.GetComponent<PlayerInput>().DeactivateInput();
+                Destroy(player.gameObject);
+            }
+            _players.Clear();
+        }
+
         void Start()
         {
             DontDestroyOnLoad(gameObject);

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using Mew.Objects;
 
 namespace Mew.Managers
@@ -25,6 +26,13 @@ namespace Mew.Managers
 
             cameraAnimator.Play("CameraResults");
             Audio.Instance.PlayMusic(Models.GameState.GameOver);
+        }
+
+        public void ReturnToMenu()
+        {
+            PlayerRoster.Instance.RemoveAllPlayers();
+            PlayerRoster.Instance.JoiningEnabled = true;
+            SceneManager.LoadScene(Constants.Scenes.Menu);
         }
     }
 }
