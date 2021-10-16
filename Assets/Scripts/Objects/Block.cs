@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using Mew.Models;
 using Mew.Managers;
 
@@ -41,27 +42,32 @@ namespace Mew.Objects
             ToggleArrow(false);
         }
 
-        public Direction GetNextDirection(Direction direction)
+        public Direction GetNextDirection(Direction initialDirection)
         {
             if (_directionOverride != Direction.Default)
-                direction = _directionOverride;
+                initialDirection = _directionOverride;
 
-            var index = (int)direction;
-            while (true)
-            {
-                if (index == 1 && !_blockers.up)
-                    return Direction.Up;
-                else if (index == 2 && !_blockers.right)
-                    return Direction.Right;
-                else if (index == 3 && !_blockers.down)
-                    return Direction.Down;
-                else if (index == 4 && !_blockers.left)
-                    return Direction.Left;
+            var preferredDirections = initialDirection switch {
+                Direction.Up => new List<Direction>
+                { Direction.Up, Direction.Right, Direction.Left, Direction.Down },
+                Direction.Right => new List<Direction>
+                { Direction.Right, Direction.Down, Direction.Up, Direction.Left },
+                Direction.Down => new List<Direction>
+                { Direction.Down, Direction.Left, Direction.Right, Direction.Up },
+                _ => new List<Direction>
+                { Direction.Left, Direction.Up, Direction.Down, Direction.Right },
+            };
 
-                index++;
-                if (index == 5)
-                    index = 1;
-            }
+            if (_blockers.up)
+                preferredDirections.Remove(Direction.Up);
+            if (_blockers.right)
+                preferredDirections.Remove(Direction.Right);
+            if (_blockers.down)
+                preferredDirections.Remove(Direction.Down);
+            if (_blockers.left)
+                preferredDirections.Remove(Direction.Left);
+
+            return preferredDirections[0];
         }
 
         public void PlaceArrow(int player, Direction direction)
