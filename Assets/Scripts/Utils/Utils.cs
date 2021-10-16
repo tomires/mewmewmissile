@@ -1,5 +1,7 @@
+using System.IO;
 using UnityEngine;
 using Mew.Models;
+using System.Collections.Generic;
 
 namespace Mew
 {
@@ -45,6 +47,16 @@ namespace Mew
         public static string TimeToHumanReadable(int time)
         {
             return $"{ Mathf.FloorToInt(time / 60) }:{ string.Format("{0:00}", time % 60) }";
+        }
+
+        public static List<string> GetAllStagePaths()
+        {
+            var files = Directory.GetFiles(Constants.Paths.StagesFolder);
+            var stageFiles = new List<string>();
+            foreach (var file in files)
+                if (file.Contains(".mew") && !file.Contains(".meta"))
+                    stageFiles.Add(file);
+            return stageFiles;
         }
     }
 }

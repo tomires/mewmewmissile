@@ -56,6 +56,7 @@ namespace Mew.Managers
         private int _timeLeft;
         private Coroutine _changeModeBackCoroutine;
         private bool _readyForNextMatch = false;
+        private List<string> _unpickedStages = new List<string>();
 
         public void PropagatePlayerScore(int player, int score)
         {
@@ -173,15 +174,26 @@ namespace Mew.Managers
 
             var winner = PlayerRoster.Instance.GetWinner();
             if (winner == -1)
-                InitializeBoard("stage1.mew");
+                InitializeBoard();
             else
                 SceneManager.LoadScene(Constants.Scenes.Results);
         }
 
         void Start()
         {
-            InitializeBoard("stage1.mew");
+            InitializeBoard();
             InitializeScoreCards();
+        }
+
+        private string GetRandomStagePath()
+        {
+            if (_unpickedStages.Count == 0)
+                _unpickedStages = Utils.GetAllStagePaths();
+
+            var random = Random.Range(0, _unpickedStages.Count);
+            var randomLevel = _unpickedStages[random];
+            _unpickedStages.RemoveAt(random);
+            return randomLevel;
         }
 
         private void InitializeScoreCards()
@@ -194,11 +206,12 @@ namespace Mew.Managers
             }
         }
 
-        private void InitializeBoard(string file)
+        private void InitializeBoard()
         {
+            var stagePath = GetRandomStagePath();
             Audio.Instance.PlayMusic(GameState.Match);
             List<List<string>> board = new List<List<string>>();
-            using (var reader = new StreamReader($"{Constants.Paths.StagesFolder}/{file}"))
+            using (var reader = new StreamReader(stagePath))
             {
                 while (!reader.EndOfStream)
                 {
