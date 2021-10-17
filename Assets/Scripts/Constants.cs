@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Mew.Constants
@@ -36,6 +37,20 @@ namespace Mew.Constants
         public static readonly string Rocket = "Rocket";
     }
 
+    public static class Animations
+    {
+        public static readonly string CameraMatchBegin = "CameraMatchBegin";
+        public static readonly string MoveCameraOnMatchEnd = "MoveCameraOnMatchEnd";
+        public static readonly string CameraMatchEnd = "CameraMatchEnd";
+        public static readonly string CameraResults = "CameraResults";
+        public static readonly string RocketRotate = "RocketRotate";
+        public static readonly string RocketBlastOff = "RocketBlastOff";
+        public static readonly string RocketBump = "RocketBump";
+        public static readonly string ControllerBump = "ControllerBump";
+        public static readonly string ScoreTextIncrement = "ScoreTextIncrement";
+        public static readonly string WinIconFadeIn = "WinIconFadeIn";
+    }
+
     public static class Settings
     {
         public static readonly Vector2 BoardSize = new Vector2(12, 9);
@@ -59,6 +74,7 @@ namespace Mew.Constants
         public static readonly int MouseBonusValue = 50;
         public static readonly int MaxMouseCount = 50;
         public static readonly int MaxCatCount = 4;
+        public static readonly int MaxPlayerCount = 4;
         public static readonly int MaxArrowsPerPlayer = 3;
         public static readonly int ArrowHitpoints = 2;
         public static readonly Vector2[] SelectorPositions = new Vector2[]
@@ -68,10 +84,14 @@ namespace Mew.Constants
             new Vector2(5, 6),
             new Vector2(6, 6)
         };
+        public static readonly int DicePositions = 24;
+        public static readonly List<int> CatDiceThrows = new List<int> { 0 };
+        public static readonly List<int> MouseDiceThrows = new List<int> { 2, 4, 6, 8, 10, 12, 14, 16, 18 };
     }   
 
     public static class Paths
     {
         public static readonly string StagesFolder = $"{Application.streamingAssetsPath}/";
+        public static readonly string StageExtension = ".mew";
     }
 }

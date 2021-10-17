@@ -37,12 +37,12 @@ namespace Mew.Objects
 
         public void BlastRocket()
         {
-            GetComponent<Animator>().Play("RocketBlastOff");
+            GetComponent<Animator>().Play(Constants.Animations.RocketBlastOff);
         }
 
         private void BumpRocket()
         {
-            GetComponent<Animator>().Play("RocketBump");
+            GetComponent<Animator>().Play(Constants.Animations.RocketBump);
         }
     }
 }

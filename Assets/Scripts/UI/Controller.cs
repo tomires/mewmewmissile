@@ -17,7 +17,7 @@ namespace Mew.UI
 
         public void BumpController()
         {
-            GetComponent<Animator>().Play("ControllerBump");
+            GetComponent<Animator>().Play(Constants.Animations.ControllerBump);
         }
     }
 }

@@ -2,7 +2,6 @@ using UnityEngine;
 using System.Collections;
 using Mew.Models;
 using Mew.Managers;
-using System.Collections.Generic;
 
 namespace Mew.Objects
 {
@@ -24,11 +23,11 @@ namespace Mew.Objects
 
             while (true)
             {
-                var random = Random.Range(0, 24);
-                if (new List<int> { 0 }.Contains(random)
+                var random = Random.Range(0, Constants.Settings.DicePositions);
+                if (Constants.Settings.CatDiceThrows.Contains(random)
                     && Game.Instance.CurrentMode != GameState.MouseMania)
                     SpawnCat();
-                else if (new List<int> { 2, 4, 6, 8, 10, 12, 14, 16, 18 }.Contains(random)
+                else if (Constants.Settings.MouseDiceThrows.Contains(random)
                     && Game.Instance.CurrentMode != GameState.CatMania)
                     SpawnMouse();
 

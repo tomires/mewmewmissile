@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using System.Collections;
+using System.Linq;
 using System.IO;
 using Mew.Objects;
 using Mew.Models;
@@ -151,16 +152,11 @@ namespace Mew.Managers
             if (!_readyForNextMatch) return;
             _readyForNextMatch = false;
 
-            foreach (var block in _blocks)
-                Destroy(block.gameObject);
-            foreach (var spawner in _spawners)
-                Destroy(spawner.gameObject);
-            foreach (var rocket in _rockets)
-                Destroy(rocket.gameObject);
-            foreach (var hole in _holes)
-                Destroy(hole.gameObject);
-            foreach (var creature in FindObjectsOfType<Creature>())
-                Destroy(creature.gameObject);
+            _blocks.ForEach(x => Destroy(x.gameObject));
+            _spawners.ForEach(x => Destroy(x.gameObject));
+            _rockets.ForEach(x => Destroy(x.gameObject));
+            _holes.ForEach(x => Destroy(x.gameObject));
+            FindObjectsOfType<Creature>().ToList().ForEach(x => Destroy(x.gameObject));
 
             PlayerRoster.Instance.PrepareForNextMatch();
 
@@ -251,7 +247,7 @@ namespace Mew.Managers
             }
 
             _currentMode = GameState.Match;
-            cameraAnimator.Play("CameraMatchBegin");
+            cameraAnimator.Play(Constants.Animations.CameraMatchBegin);
             PlayerRoster.Instance.ResetSelectorPositions();
             StartCoroutine(CountDownTime());
         }
@@ -288,12 +284,12 @@ namespace Mew.Managers
 
             PlayerRoster.Instance.PropagateWins(leaders);
             PlayerRoster.Instance.ToggleInteractivity(false);
-            Invoke("MoveCameraOnMatchEnd", 2.0f);
+            Invoke(Constants.Animations.MoveCameraOnMatchEnd, 2.0f);
         }
 
         private void MoveCameraOnMatchEnd()
         {
-            cameraAnimator.Play("CameraMatchEnd");
+            cameraAnimator.Play(Constants.Animations.CameraMatchEnd);
             _readyForNextMatch = true;
         }
 

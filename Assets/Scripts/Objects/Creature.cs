@@ -57,7 +57,8 @@ namespace Mew.Objects
             while (true)
             {
                 step += Time.deltaTime / (Game.Instance.Speed * 1 / SpeedMultiplier);
-                transform.position = new Vector3(_coordinates.x + offset.x * step, 0, _coordinates.y + offset.y * step);
+                var interimPosition = new Vector2(_coordinates.x + offset.x * step, _coordinates.y + offset.y * step);
+                transform.position = Utils.CoordinatesTo3D(interimPosition);
                 yield return null;
             }
         }
@@ -89,9 +90,9 @@ namespace Mew.Objects
         private void OnDestroy()
         {
             if (_isMouse)
-                Game.Instance.UpdateMouseCount(false);
+                Game.Instance?.UpdateMouseCount(false);
             else if (_isCat)
-                Game.Instance.UpdateCatCount(false);
+                Game.Instance?.UpdateCatCount(false);
         }
     }
 }

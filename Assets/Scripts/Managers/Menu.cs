@@ -18,7 +18,7 @@ namespace Mew.Managers
             yield return null;
             Audio.Instance.PlayMusic(GameState.Menu);
 
-            for (int c = 0; c < 4; c++)
+            for (int c = 0; c < Constants.Settings.MaxPlayerCount; c++)
             {
                 var controller = Instantiate(controllerPrefab, controllersParent);
                 _controllers.Add(controller.GetComponent<Controller>());

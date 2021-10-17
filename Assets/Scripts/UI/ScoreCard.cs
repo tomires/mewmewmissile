@@ -22,14 +22,14 @@ namespace Mew.UI
         public void SetScore(int score)
         {
             scoreText.text = score.ToString();
-            scoreTextAnimator.Play("ScoreTextIncrement");
+            scoreTextAnimator.Play(Constants.Animations.ScoreTextIncrement);
         }
 
         public void AddWin()
         {
             var win = Instantiate(winIcon, winIcon.transform.parent);
             win.gameObject.SetActive(true);
-            win.GetComponent<Animator>().Play("WinIconFadeIn");
+            win.GetComponent<Animator>().Play(Constants.Animations.WinIconFadeIn);
         }
     }
 }

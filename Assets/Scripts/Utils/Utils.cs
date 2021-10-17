@@ -54,7 +54,7 @@ namespace Mew
             var files = Directory.GetFiles(Constants.Paths.StagesFolder);
             var stageFiles = new List<string>();
             foreach (var file in files)
-                if (file.Contains(".mew") && !file.Contains(".meta"))
+                if (file.Contains(Constants.Paths.StageExtension) && !file.Contains(".meta"))
                     stageFiles.Add(file);
             return stageFiles;
         }

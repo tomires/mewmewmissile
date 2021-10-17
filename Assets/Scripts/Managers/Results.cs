@@ -20,11 +20,11 @@ namespace Mew.Managers
 
             foreach (var rocket in rockets)
             {
-                rocket.GetComponent<Animator>().Play("RocketRotate");
+                rocket.GetComponent<Animator>().Play(Constants.Animations.RocketRotate);
                 rocket.Initialize(winner);
             }
 
-            cameraAnimator.Play("CameraResults");
+            cameraAnimator.Play(Constants.Animations.CameraResults);
             Audio.Instance.PlayMusic(Models.GameState.GameOver);
         }
 
